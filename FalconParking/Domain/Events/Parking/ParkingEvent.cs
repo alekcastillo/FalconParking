@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FalconParking.Domain.Events
 {
-    class ParkingEvent
+    public class ParkingEvent
     {
         public int ParkingLotId { get; private set; }
 

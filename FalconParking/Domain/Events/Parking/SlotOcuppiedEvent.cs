@@ -6,7 +6,7 @@ namespace FalconParking.Domain.Events
 {
     class SlotOcuppiedEvent : SlotEvent
     {
-        public LotClosed(
+        public SlotOcuppiedEvent(
             int parkingLotId
             , string licensePlate) : base(parkingLotId, licensePlate)
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FalconParking.Domain.Events
 {
-    class SlotEvent : ParkingEvent
+    public class SlotEvent : ParkingEvent
     {
         public string LicensePlate { get; private set; }
 
