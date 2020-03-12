@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\Abstractions\" />
+    <Folder Include="Domain\Attributes\" />
     <Folder Include="Infrastructure\Commands\" />
   </ItemGroup>
 
