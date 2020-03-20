@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace FalconParking.Infrastructure.Repositories
 {
-    public class ParkingRepository : IInMemoryRepository<Lot>
+    public class ParkingRepository : IInMemoryRepository<ParkingLot>
     {
-        private readonly List<Lot> _parkingLots;
+        private readonly List<ParkingLot> _parkingLots;
 
         public ParkingRepository()
         {
-            _parkingLots = new List<Lot>();
+            _parkingLots = new List<ParkingLot>();
         }
 
         public void UseSlot(int parkingLotId)
@@ -33,7 +33,7 @@ namespace FalconParking.Infrastructure.Repositories
             //_parkingLots.Add(treatmentPlan);
         }
 
-        public Task<SlotOcuppation> FindSlotUsageAsync(Guid aggregateId, CancellationToken token = default)
+        public Task<ParkingSlotOcuppant> FindSlotUsageAsync(Guid aggregateId, CancellationToken token = default)
         {
             return Task.FromResult(_parkingLots.FirstOrDefault(x => x.AggregateId == aggregateId));
         }
