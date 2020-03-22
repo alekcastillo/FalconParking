@@ -4,16 +4,16 @@ namespace FalconParking.Domain.Entities
 {
     public enum ParkingSlotStatus
     {
-        [Description("Available")]
-        AVAILABLE,
+        [Description("Disponible")]
+        Available,
 
-        [Description("Occuppied")]
-        OCCUPPIED,
+        [Description("Ocupado")]
+        Occuppied,
 
-        [Description("Reserved")]
-        RESERVED,
+        [Description("Reservado")]
+        Reserved,
 
-        [Description("Temporarily closed")]
-        CLOSED
+        [Description("Cerrado temporalmente")]
+        Closed
     }
 }

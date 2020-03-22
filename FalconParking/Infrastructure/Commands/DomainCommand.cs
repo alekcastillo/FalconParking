@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FalconParking.Domain.Abstractions.Commands;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FalconParking.Infrastructure.Commands
 {
-    class DomainCommand
+    public class DomainCommand : ICommand<int>
     {
         public enum DomainCommandType
         {
@@ -13,11 +14,12 @@ namespace FalconParking.Infrastructure.Commands
             DELETE
         }
 
-        public DomainCommandType Type;
+        //public DomainCommandType Type { get; }
+        public int AggregateId { get; }
 
-        public DomainCommand(DomainCommandType type)
+        public DomainCommand(int aggregateId)
         {
-            Type = type;
+            AggregateId = aggregateId;
         }
     }
 }

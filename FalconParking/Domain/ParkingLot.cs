@@ -7,63 +7,107 @@ using System.Text;
 
 namespace FalconParking.Domain
 {
-    public class ParkingLot
+    public class ParkingLot : Aggregate
     {
-        public int id { get; private set; }
-        public string code { get; private set; }
-        public float x { get; private set; }
-        public float y { get; private set; }
-        public int totalSlotsCount { get; private set; }
-        public int availableSlotsCount { get; private set; }
-        public ParkingSlot[] slots { get; private set; }
+        public string Code { get; private set; }
+        public float X { get; private set; }
+        public float Y { get; private set; }
+        public int TotalSlotsCount { get; }
+        public int AvailableSlotsCount { get; private set; }
+        private ParkingSlot[] _slots { get; set; }
 
         public ParkingLot(
-            int Id,
-            string Code,
-            float X,
-            float Y,
-            int TotalSlotsCount)
+            int agregateId, 
+            string code,
+            float x,
+            float y,
+            int totalSlotsCount) : base(agregateId)
         {
-            id = Id;
-            code = Code;
-            x = X;
-            y = Y;
-            totalSlotsCount = TotalSlotsCount;
-            availableSlotsCount = totalSlotsCount;
-            slots = new ParkingSlot[totalSlotsCount];
+            Code = code;
+            X = x;
+            Y = y;
+            TotalSlotsCount = totalSlotsCount;
+            AvailableSlotsCount = totalSlotsCount;
+            _slots = new ParkingSlot[totalSlotsCount];
 
             for (int i = 0; i < totalSlotsCount; i++)
             {
-                slots[i] = new ParkingSlot(i + 1);
+                _slots[i] = new ParkingSlot(i + 1);
             }
         }
 
-        public void OcuppySlot(string carLicensePlate, int parkingSlotId)
+        public void OcuppySlot(int parkingSlotId, string carLicensePlate)
         {
-            if (this.freeSlots() < 1)
-                throw new DomainException("No hay espacios disponibles en el parqueo");
+            var slot = GetSlotById(parkingSlotId);
 
-            var slotOccupation = new ParkingSlotOcuppant(carLicensePlate);
+            if (!slot.isAvailable())
+                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible");
 
+            slot.Ocuppy(carLicensePlate);
+            AvailableSlotsCount--;
 
-
-            ocuppiedSlots.Add(slotOccupation);
-
-            RaiseEvent(new SlotOcuppiedEvent(1, "aa"));
+            RaiseEvent(new SlotOcuppiedEvent(parkingSlotId, carLicensePlate));
         }
 
-        private int freeSlots()
+        public void ReserveSlot(int parkingSlotId, string carLicensePlate, ParkingSlotReservationTime reservationTime)
         {
-            return totalSlots - (ocuppiedSlots.Count + reservedSlots.Count);
+            var slot = GetSlotById(parkingSlotId);
+
+            if (!slot.isAvailable())
+                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible para reservar");
+
+            slot.Reserve(carLicensePlate, reservationTime);
+            AvailableSlotsCount--;
+
+            RaiseEvent(new SlotOcuppiedEvent(parkingSlotId, carLicensePlate));
         }
+
+        private void FreeSlot(string carLicensePlate)
+        {
+            var slot = GetSlotByOcuppantCarLicensePlate(carLicensePlate);
+            slot.Free();
+            AvailableSlotsCount++;
+
+            RaiseEvent(new SlotFreedEvent(slot.id, carLicensePlate));
+        }
+
+        private void OpenSlot(int parkingSlotId)
+        {
+            var slot = GetSlotById(parkingSlotId);
+            slot.Open();
+            AvailableSlotsCount++;
+
+            //RaiseEvent(new SlotOpenedEvent(parkingSlotId));
+        }
+
+        private void CloseSlot(int parkingSlotId)
+        {
+            var slot = GetSlotById(parkingSlotId);
+            slot.Close();
+            AvailableSlotsCount--;
+
+            //RaiseEvent(new SlotClosedEvent(parkingSlotId));
+        }
+
         private ParkingSlot GetSlotById(int parkingSlotId)
         {
-            if (slots.Length < parkingSlotId)
-                throw new DomainException($"El campo {parkingSlotId} no existe en el parqueo {code}");
+            if (parkingSlotId < 0 || AvailableSlotsCount < parkingSlotId)
+                throw new DomainException($"El campo {parkingSlotId} no existe en el parqueo {Code}");
 
             var slotIndex = parkingSlotId - 1;
 
-            return slots[slotIndex];
+            return _slots[slotIndex];
+        }
+
+        private ParkingSlot GetSlotByOcuppantCarLicensePlate(string carLicensePlate)
+        {
+            foreach (var slot in _slots)
+            {
+                if (slot.currentOcuppant.carLicensePlate == carLicensePlate)
+                    return slot;
+            }
+
+            throw new DomainException($"No se ha encontrado en cual campo estaba el automovil de placa {carLicensePlate} en el parqueo {Code}");
         }
     }
 }

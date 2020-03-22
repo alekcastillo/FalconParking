@@ -13,14 +13,14 @@ namespace FalconParking.Infrastructure.Handlers
 {
     public class GetLotInformationHandler : IRequestHandler<GetLotInformationQuery, ParkingClientView>
     {
-        private readonly IParkingEventRepository _eventsRepository;
+        //private readonly IParkingEventRepository _eventsRepository;
         //private readonly IMapper _mapper;
 
-        public GetLotInformationHandler(
-            IParkingEventRepository eventsRepository)
+        public GetLotInformationHandler()
+            //IParkingEventRepository eventsRepository)
             //IMapper mapper)
         {
-            _eventsRepository = eventsRepository;
+            //_eventsRepository = eventsRepository;
            // _mapper = mapper;
         }
 
