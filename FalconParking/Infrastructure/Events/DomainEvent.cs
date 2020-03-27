@@ -5,10 +5,11 @@ using System.Text;
 
 namespace FalconParking.Domain.Events
 {
-    public class ParkingEvent : DomainEvent, IDomainEvent
+    public class DomainEvent : IDomainEvent
     {
-        public ParkingEvent(
-            int parkingLotId) : base(parkingLotId)
+        int AggregateId;
+
+        public DomainEvent(int aggregateId)
         {
         }
     }

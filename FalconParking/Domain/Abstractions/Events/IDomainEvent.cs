@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FalconParking.Domain.Events
+namespace FalconParking.Domain.Abstractions.Events
 {
-    public class DomainEvent
+    interface IDomainEvent
     {
     }
 }

@@ -3,15 +3,16 @@ using FalconParking.Domain.Interfaces;
 using FalconParking.Domain.Abstractions.Commands;
 using System.Threading;
 using System.Threading.Tasks;
+using FalconParking.Domain.Abstractions.Repositories;
 
 namespace FalconParking.Infrastructure.Commands.Handlers
 {
     public class OccupyParkingSlotCommandHandler : ICommandHandler<OccupyParkingSlotCommand, int>
     {
-        private readonly IInMemoryRepository<ParkingLot> _repository;
+        private readonly IParkingLotRepository _repository;
 
         public OccupyParkingSlotCommandHandler(
-            IInMemoryRepository<ParkingLot> repository)
+            IParkingLotRepository repository)
         {
             _repository = repository;
         }

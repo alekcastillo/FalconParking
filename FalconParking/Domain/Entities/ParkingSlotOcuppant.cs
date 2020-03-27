@@ -6,12 +6,12 @@ namespace FalconParking.Domain
 {
     public class ParkingSlotOcuppant
     {
-        public string carLicensePlate { get; private set; }
+        public string CarLicensePlate { get; private set; }
 
         public ParkingSlotOcuppant(
             string CarLicensePlate)
         {
-            carLicensePlate = CarLicensePlate;
+            CarLicensePlate = CarLicensePlate;
         }
 
     }

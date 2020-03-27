@@ -9,6 +9,8 @@ namespace FalconParking.Domain
 {
     public class ParkingLot : Aggregate
     {
+        #region Atributos
+
         public string Code { get; private set; }
         public float X { get; private set; }
         public float Y { get; private set; }
@@ -16,12 +18,14 @@ namespace FalconParking.Domain
         public int AvailableSlotsCount { get; private set; }
         private ParkingSlot[] _slots { get; set; }
 
+        #endregion
+
         public ParkingLot(
-            int agregateId, 
+            int aggregateId, 
             string code,
             float x,
             float y,
-            int totalSlotsCount) : base(agregateId)
+            int totalSlotsCount) : base(aggregateId)
         {
             Code = code;
             X = x;
@@ -36,58 +40,7 @@ namespace FalconParking.Domain
             }
         }
 
-        public void OcuppySlot(int parkingSlotId, string carLicensePlate)
-        {
-            var slot = GetSlotById(parkingSlotId);
-
-            if (!slot.isAvailable())
-                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible");
-
-            slot.Ocuppy(carLicensePlate);
-            AvailableSlotsCount--;
-
-            RaiseEvent(new SlotOcuppiedEvent(parkingSlotId, carLicensePlate));
-        }
-
-        public void ReserveSlot(int parkingSlotId, string carLicensePlate, ParkingSlotReservationTime reservationTime)
-        {
-            var slot = GetSlotById(parkingSlotId);
-
-            if (!slot.isAvailable())
-                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible para reservar");
-
-            slot.Reserve(carLicensePlate, reservationTime);
-            AvailableSlotsCount--;
-
-            RaiseEvent(new SlotOcuppiedEvent(parkingSlotId, carLicensePlate));
-        }
-
-        private void FreeSlot(string carLicensePlate)
-        {
-            var slot = GetSlotByOcuppantCarLicensePlate(carLicensePlate);
-            slot.Free();
-            AvailableSlotsCount++;
-
-            RaiseEvent(new SlotFreedEvent(slot.id, carLicensePlate));
-        }
-
-        private void OpenSlot(int parkingSlotId)
-        {
-            var slot = GetSlotById(parkingSlotId);
-            slot.Open();
-            AvailableSlotsCount++;
-
-            //RaiseEvent(new SlotOpenedEvent(parkingSlotId));
-        }
-
-        private void CloseSlot(int parkingSlotId)
-        {
-            var slot = GetSlotById(parkingSlotId);
-            slot.Close();
-            AvailableSlotsCount--;
-
-            //RaiseEvent(new SlotClosedEvent(parkingSlotId));
-        }
+        #region Metodos privados
 
         private ParkingSlot GetSlotById(int parkingSlotId)
         {
@@ -103,11 +56,106 @@ namespace FalconParking.Domain
         {
             foreach (var slot in _slots)
             {
-                if (slot.currentOcuppant.carLicensePlate == carLicensePlate)
+                if (slot.CurrentOcuppant.CarLicensePlate == carLicensePlate)
                     return slot;
             }
 
             throw new DomainException($"No se ha encontrado en cual campo estaba el automovil de placa {carLicensePlate} en el parqueo {Code}");
         }
+
+        #endregion
+
+        #region Metodos publicos
+
+        public void OcuppySlot(int parkingSlotId, string carLicensePlate)
+        {
+            var slot = GetSlotById(parkingSlotId);
+
+            if (!slot.isAvailable())
+                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible");
+
+            slot.Ocuppy(carLicensePlate);
+            AvailableSlotsCount--;
+
+            RaiseEvent(new ParkingSlotOcuppiedEvent(AggregateId, slot));
+        }
+
+        public void ReserveSlot(int parkingSlotId, string carLicensePlate, ParkingSlotReservationTime reservationTime)
+        {
+            var slot = GetSlotById(parkingSlotId);
+
+            if (!slot.isAvailable())
+                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible para reservar");
+
+            slot.Reserve(carLicensePlate, reservationTime);
+            AvailableSlotsCount--;
+
+            RaiseEvent(new ParkingSlotReservedEvent(AggregateId, slot));
+        }
+
+        private void FreeSlot(string carLicensePlate)
+        {
+            var slot = GetSlotByOcuppantCarLicensePlate(carLicensePlate);
+            slot.Free();
+            AvailableSlotsCount++;
+
+            RaiseEvent(new ParkingSlotFreedEvent(AggregateId, slot));
+        }
+
+        private void OpenSlot(int parkingSlotId)
+        {
+            var slot = GetSlotById(parkingSlotId);
+            slot.Open();
+            AvailableSlotsCount++;
+
+            RaiseEvent(new ParkingSlotOpenedEvent(AggregateId, slot));
+        }
+
+        private void CloseSlot(int parkingSlotId)
+        {
+            var slot = GetSlotById(parkingSlotId);
+            slot.Close();
+            AvailableSlotsCount--;
+
+            RaiseEvent(new ParkingSlotClosedEvent(AggregateId, slot));
+        }
+
+        #endregion
+
+        #region Metodos Apply
+
+        public void Apply(ParkingSlotOcuppiedEvent parkingEvent) {
+            Apply(parkingEvent.Slot);
+        }
+
+        public void Apply(ParkingSlotReservedEvent parkingEvent)
+        {
+            Apply(parkingEvent.Slot);
+        }
+
+        public void Apply(ParkingSlotFreedEvent parkingEvent)
+        {
+            Apply(parkingEvent.Slot);
+        }
+
+        public void Apply(ParkingSlotOpenedEvent parkingEvent)
+        {
+            Apply(parkingEvent.Slot);
+        }
+
+        public void Apply(ParkingSlotClosedEvent parkingEvent)
+        {
+            Apply(parkingEvent.Slot);
+        }
+
+        public void Apply(ParkingSlot parkingSlot)
+        {
+            var parkingSlotId = parkingSlot.Id;
+
+            if (parkingSlotId > -1 && AvailableSlotsCount >= parkingSlotId)
+                _slots[parkingSlot.Id - 1] = parkingSlot;
+        }
+
+        #endregion
     }
 }

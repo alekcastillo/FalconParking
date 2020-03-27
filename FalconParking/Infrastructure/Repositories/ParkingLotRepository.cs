@@ -1,4 +1,5 @@
 ﻿using FalconParking.Domain;
+using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FalconParking.Infrastructure.Repositories
 {
-    public class ParkingLotRepository : IInMemoryRepository<ParkingLot>
+    public class ParkingLotRepository : IParkingLotRepository
     {
         private readonly ParkingLot[] _parkingLots;
 
