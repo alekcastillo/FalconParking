@@ -8,7 +8,7 @@ namespace FalconParking.Domain.Collections
     class ParkingSlotCollection
     {
         private ParkingSlot[] slots { get; set; }
-        public void Ocupy(int parkingSlotId)
+        public void Occupy(int parkingSlotId)
         {
             var slotIndex = parkingSlotId - 1;
             var slot = slots[slotIndex];

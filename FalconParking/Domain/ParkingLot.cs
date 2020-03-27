@@ -1,4 +1,5 @@
-﻿using FalconParking.Domain.Entities;
+﻿using FalconParking.Domain.Attributes;
+using FalconParking.Domain.Entities;
 using FalconParking.Domain.Events;
 using FalconParking.Domain.Exceptions;
 using System;
@@ -16,6 +17,7 @@ namespace FalconParking.Domain
         public float Y { get; private set; }
         public int TotalSlotsCount { get; }
         public int AvailableSlotsCount { get; private set; }
+        public ParkingLotStatus Status { get; private set; }
         private ParkingSlot[] _slots { get; set; }
 
         #endregion
@@ -66,6 +68,13 @@ namespace FalconParking.Domain
         #endregion
 
         #region Metodos publicos
+
+        public void Open()
+        {
+            Status = ParkingLotStatus.Open;
+
+            RaiseEvent(new ParkingLotOpenedEvent(AggregateId));
+        }
 
         public void OcuppySlot(int parkingSlotId, string carLicensePlate)
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FalconParking.Domain.Events
 {
-    public class ParkingSlotEvent : ParkingEvent
+    public abstract class ParkingSlotEvent : ParkingEvent
     {
         public ParkingSlot Slot { get; }
 

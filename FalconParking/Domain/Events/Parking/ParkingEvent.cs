@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FalconParking.Domain.Events
 {
-    public class ParkingEvent : DomainEvent, IDomainEvent
+    public abstract class ParkingEvent : DomainEvent, IDomainEvent
     {
         public ParkingEvent(
             int parkingLotId) : base(parkingLotId)

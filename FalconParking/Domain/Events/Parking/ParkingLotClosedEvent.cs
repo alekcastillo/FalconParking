@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FalconParking.Domain.Events.Parking
 {
-    class ParkingLotOpened : ParkingEvent
+    class ParkingLotClosedEvent : ParkingEvent
     {
-        public ParkingLotOpened(
+        public ParkingLotClosedEvent(
             int parkingLotId) : base(parkingLotId)
         {
 
