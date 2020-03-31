@@ -22,25 +22,27 @@ namespace FalconParking.Domain
 
         #endregion
 
-        public ParkingLot(
-            int aggregateId, 
-            string code,
-            float x,
-            float y,
-            int totalSlotsCount) : base(aggregateId)
+        #region Constructor
+
+        private ParkingLot(
+            int aggregateId
+            ,string code
+            ,float x
+            ,float y
+            ,int totalSlotsCount
+            ,ParkingLotStatus status
+            ,ParkingSlot[] slots) : base(aggregateId)
         {
             Code = code;
             X = x;
             Y = y;
             TotalSlotsCount = totalSlotsCount;
             AvailableSlotsCount = totalSlotsCount;
-            _slots = new ParkingSlot[totalSlotsCount];
-
-            for (int i = 0; i < totalSlotsCount; i++)
-            {
-                _slots[i] = new ParkingSlot(i + 1);
-            }
+            Status = status;
+            _slots = slots;
         }
+
+        #endregion
 
         #region Metodos privados
 
@@ -69,11 +71,38 @@ namespace FalconParking.Domain
 
         #region Metodos publicos
 
+        public static ParkingLot New(
+            int aggregateId,
+            string code,
+            float x,
+            float y,
+            int totalSlotsCount)
+        {
+            if (totalSlotsCount > 1)
+                throw new ArgumentException($"No se puede crear un parqueo con menos de un campo!");
+
+            var slots = new ParkingSlot[totalSlotsCount];
+
+            for (int i = 0; i < totalSlotsCount; i++)
+            {
+                slots[i] = new ParkingSlot(i + 1);
+            }
+
+            return new ParkingLot(
+                aggregateId
+                ,code
+                ,x
+                ,y
+                ,totalSlotsCount
+                ,ParkingLotStatus.Open
+                ,slots);
+        }
+
         public void Open()
         {
             Status = ParkingLotStatus.Open;
 
-            RaiseEvent(new ParkingLotOpenedEvent(AggregateId));
+            //RaiseEvent(new ParkingLotOpenedEvent(AggregateId));
         }
 
         public void OcuppySlot(int parkingSlotId, string carLicensePlate)

@@ -8,7 +8,7 @@ namespace FalconParking.Domain.Interfaces
     public interface IEventRepository<TEntity> where TEntity : class
     {
         TEntity Get(int id);
-        IEnumerable<TEntity> GetAll();
+        //IEnumerable<TEntity> GetAllByAggregate(int aggregateId);
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         void Add(TEntity entity);
         void Add(IEnumerable<TEntity> entities);

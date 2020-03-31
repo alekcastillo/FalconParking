@@ -8,13 +8,13 @@ namespace FalconParking.Domain.Events
 {
     public abstract class ParkingSlotEvent : ParkingEvent
     {
-        public ParkingSlot Slot { get; }
+        public int ParkingSlotId { get; }
 
         protected ParkingSlotEvent(
             int parkingLotId,
-            ParkingSlot slot) : base(parkingLotId)
+            int parkingSlotId) : base(parkingLotId)
         {
-            Slot = slot;
+            ParkingSlotId = parkingSlotId;
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FalconParking.Infrastructure.Commands;
-using FalconParking.Infrastructure.Queries;
 using FalconParkingAPI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace FalconParkingAPI.Controllers
 {
     [ApiController]
-    [Route("api/")]
+    [Route("parkingLots/")]
     public class ParkingLotController : Controller
     {
         private readonly ILogger<ParkingLotController> _logger;
@@ -35,12 +34,32 @@ namespace FalconParkingAPI.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        // GET: api/<controller>
-        [HttpPost("occupy")]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(400)]
+        public async Task<string> GetParkingLotView(int id)
+        {
+            //var command = _mapper.Map<OccupyParkingSlotCommand>();
+            //var response = await _mediator.Send(command);
+            return ""; //response.ToString();
+        }
+
+        [HttpPost("open")]
         [ProducesResponseType(typeof(Guid), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<string> OpenParkingLot([FromBody] OccupyParkingSlotRequest request)
+        {
+            var command = _mapper.Map<OccupyParkingSlotCommand>(request);
+            var response = await _mediator.Send(command);
+            return response.ToString();
+        }
+
+        [HttpPost("close")]
+        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<string> CloseParkingLot([FromBody] OccupyParkingSlotRequest request)
         {
             var command = _mapper.Map<OccupyParkingSlotCommand>(request);
             var response = await _mediator.Send(command);

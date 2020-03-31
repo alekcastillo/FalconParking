@@ -18,6 +18,8 @@ using Microsoft.Extensions.Logging;
 using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain;
 using FalconParking.Infrastructure.Repositories;
+using FalconParking.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace FalconParkingAPI
 {
@@ -33,6 +35,9 @@ namespace FalconParkingAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkNpgsql().AddDbContext<FalconParkingDbContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("FalconParkingDbConnection"),
+                b => b.MigrationsAssembly("FalconParkingAPI")));
             services.AddControllers();
             //Mediator handlers
             services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(OccupyParkingSlotCommandHandler).Assembly);

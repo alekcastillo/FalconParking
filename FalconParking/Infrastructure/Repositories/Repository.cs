@@ -31,6 +31,7 @@ namespace FalconParking.Infrastructure.Repositories
         {
             return Context.Set<TEntity>().ToList();
         }
+
         public void Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);

@@ -17,9 +17,9 @@ namespace FalconParking.Infrastructure.Repositories
         public ParkingLotRepository()
         {
             _parkingLots = new ParkingLot[3];
-            _parkingLots[0] = new ParkingLot(0, "A", 0.0f, 0.0f, 20);
-            _parkingLots[1] = new ParkingLot(1, "B", 0.0f, 0.0f, 10);
-            _parkingLots[2] = new ParkingLot(2, "C", 0.0f, 0.0f, 5);
+            _parkingLots[0] = ParkingLot.New(0, "A", 0.0f, 0.0f, 20);
+            _parkingLots[1] = ParkingLot.New(1, "B", 0.0f, 0.0f, 10);
+            _parkingLots[2] = ParkingLot.New(2, "C", 0.0f, 0.0f, 5);
         }
 
         public ParkingLot Get(int id)

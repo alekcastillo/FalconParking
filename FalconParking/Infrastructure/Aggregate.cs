@@ -45,7 +45,6 @@ namespace FalconParking.Domain
         public void StageEventsToCommit()
         {
             _stagedDomainEvents.AddRange(_uncommittedDomainEvents);
-
             _uncommittedDomainEvents.Clear();
         }
 
