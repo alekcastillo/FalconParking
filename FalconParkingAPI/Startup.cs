@@ -38,6 +38,7 @@ namespace FalconParkingAPI
             services.AddEntityFrameworkNpgsql().AddDbContext<FalconParkingDbContext>(opt =>
                 opt.UseNpgsql(Configuration.GetConnectionString("FalconParkingDbConnection"),
                 b => b.MigrationsAssembly("FalconParkingAPI")));
+
             services.AddControllers();
             //Mediator handlers
             services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(OccupyParkingSlotCommandHandler).Assembly);

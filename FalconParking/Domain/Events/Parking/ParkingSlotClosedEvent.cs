@@ -9,7 +9,7 @@ namespace FalconParking.Domain.Events
     {
         public ParkingSlotClosedEvent(
             int parkingLotId,
-            ParkingSlot slot) : base(parkingLotId, slot)
+            int slot) : base(parkingLotId, slot)
         {
 
         }

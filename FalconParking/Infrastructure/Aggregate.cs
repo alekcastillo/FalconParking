@@ -12,20 +12,18 @@ namespace FalconParking.Domain
         private bool _domainEventHistoryInitialized;
         private readonly List<DomainEvent> _domainEventHistory = new List<DomainEvent>();
         private readonly List<DomainEvent> _uncommittedDomainEvents = new List<DomainEvent>();
-        private readonly List<DomainEvent> _stagedDomainEvents = new List<DomainEvent>();
 
         protected Aggregate(int aggregateId)
         {
             this.AggregateId = aggregateId;
         }
 
-        public IReadOnlyList<DomainEvent> GetDomainEventHistory
+        public List<DomainEvent> GetDomainEventHistory()
         {
-            get { return _domainEventHistory.AsReadOnly(); }
-            private set { this.InitializeDomainEventHistory(value); }
+            return _domainEventHistory;
         }
 
-        public IReadOnlyList<DomainEvent> GetUncommittedDomainEvents()
+        public List<DomainEvent> GetUncommittedDomainEvents()
         {
             return _uncommittedDomainEvents;
         }
@@ -42,16 +40,10 @@ namespace FalconParking.Domain
             }
         }
 
-        public void StageEventsToCommit()
-        {
-            _stagedDomainEvents.AddRange(_uncommittedDomainEvents);
-            _uncommittedDomainEvents.Clear();
-        }
-
         public void CommitDomainEvents()
         {
-            _domainEventHistory.AddRange(_stagedDomainEvents);
-            _stagedDomainEvents.Clear();
+            _domainEventHistory.AddRange(_uncommittedDomainEvents);
+            _uncommittedDomainEvents.Clear();
         }
 
         protected void RaiseEvent(DomainEvent domainEvent)
@@ -61,7 +53,7 @@ namespace FalconParking.Domain
             _uncommittedDomainEvents.Add(domainEvent);
         }
 
-        private void InitializeDomainEventHistory(IEnumerable<DomainEvent> domainEventHistory)
+        public void InitializeDomainEventHistory(IEnumerable<DomainEvent> domainEventHistory)
         {
             // Add the entire domain event history to aggregate state
             _domainEventHistory.AddRange(domainEventHistory);

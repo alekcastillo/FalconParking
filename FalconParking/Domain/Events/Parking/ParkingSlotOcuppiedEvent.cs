@@ -8,16 +8,13 @@ namespace FalconParking.Domain.Events
     public class ParkingSlotOcuppiedEvent : ParkingSlotEvent
     {
         public string CarLicensePlate { get; }
-        public string UserIdentification { get; }
 
         public ParkingSlotOcuppiedEvent(
             int parkingLotId
             ,int parkingSlotId
-            ,string carLicensePlate
-            ,string userIdentification) : base(parkingLotId, parkingSlotId)
+            ,string carLicensePlate) : base(parkingLotId, parkingSlotId)
         {
             CarLicensePlate = carLicensePlate;
-            UserIdentification = userIdentification;
         }
 
         //This MUST be changed
@@ -26,7 +23,7 @@ namespace FalconParking.Domain.Events
             return "{" +
                 $"\"ParkingSlotId\" : {ParkingSlotId}" +
                 $"\"CarLicensePlate\" : {CarLicensePlate}" +
-                $"\"UserIdentification\" : {UserIdentification}" +
+                //$"\"UserIdentification\" : {UserIdentification}" +
                 "}";
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FalconParking.Domain.Interfaces
 {
-    public interface IEventRepository<TEntity> where TEntity : class
+    public interface IAggregateRepository<TEntity> where TEntity : class
     {
         TEntity Get(int id);
         //IEnumerable<TEntity> GetAllByAggregate(int aggregateId);

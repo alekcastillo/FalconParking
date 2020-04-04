@@ -17,7 +17,7 @@ namespace FalconParking.Infrastructure
 
         public DbSet<ParkingLotView> ParkingLotViews { get; set; }
         public DbSet<ParkingSlotView> ParkingSlotViews { get; set; }
-        public DbSet<ParkingLotEvent> ParkingLotEvents { get; set; }
+        public DbSet<EventModel> ParkingLotEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/ushH650ry+cw1nSNSka9Y1otkTCuDnWAyg5sQReHRuqb+eUwmw8xhRs75R/149Ja9q5h/s0J+Vuj906GWXkAQ==",
+  "dgSpecHash": "xMC+qMXX2vou2s1h0uJflKcQz953tR/3DZGGf7L42XqTh7K67fXxcgWMp66ydp9hySXrFsec/IGsAf72VKjJvQ==",
   "success": true,
   "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\system.collections.immutable\\1.7.0\\system.collections.immutable.1.7.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",

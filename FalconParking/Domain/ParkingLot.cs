@@ -24,7 +24,7 @@ namespace FalconParking.Domain
 
         #region Constructor
 
-        private ParkingLot(
+        public ParkingLot( //needs privatizing
             int aggregateId
             ,string code
             ,float x
@@ -78,7 +78,7 @@ namespace FalconParking.Domain
             float y,
             int totalSlotsCount)
         {
-            if (totalSlotsCount > 1)
+            if (totalSlotsCount < 1)
                 throw new ArgumentException($"No se puede crear un parqueo con menos de un campo!");
 
             var slots = new ParkingSlot[totalSlotsCount];
@@ -115,7 +115,10 @@ namespace FalconParking.Domain
             slot.Ocuppy(carLicensePlate);
             AvailableSlotsCount--;
 
-            RaiseEvent(new ParkingSlotOcuppiedEvent(AggregateId, slot));
+            RaiseEvent(new ParkingSlotOcuppiedEvent(
+                AggregateId
+                ,parkingSlotId
+                ,carLicensePlate));
         }
 
         public void ReserveSlot(int parkingSlotId, string carLicensePlate, ParkingSlotReservationTime reservationTime)
@@ -128,7 +131,7 @@ namespace FalconParking.Domain
             slot.Reserve(carLicensePlate, reservationTime);
             AvailableSlotsCount--;
 
-            RaiseEvent(new ParkingSlotReservedEvent(AggregateId, slot));
+            //RaiseEvent(new ParkingSlotReservedEvent(AggregateId, slot));
         }
 
         private void FreeSlot(string carLicensePlate)
@@ -137,7 +140,7 @@ namespace FalconParking.Domain
             slot.Free();
             AvailableSlotsCount++;
 
-            RaiseEvent(new ParkingSlotFreedEvent(AggregateId, slot));
+            //RaiseEvent(new ParkingSlotFreedEvent(AggregateId, slot));
         }
 
         private void OpenSlot(int parkingSlotId)
@@ -146,7 +149,7 @@ namespace FalconParking.Domain
             slot.Open();
             AvailableSlotsCount++;
 
-            RaiseEvent(new ParkingSlotOpenedEvent(AggregateId, slot));
+            //RaiseEvent(new ParkingSlotOpenedEvent(AggregateId, slot));
         }
 
         private void CloseSlot(int parkingSlotId)
@@ -155,7 +158,7 @@ namespace FalconParking.Domain
             slot.Close();
             AvailableSlotsCount--;
 
-            RaiseEvent(new ParkingSlotClosedEvent(AggregateId, slot));
+            //RaiseEvent(new ParkingSlotClosedEvent(AggregateId, slot));
         }
 
         #endregion
@@ -163,27 +166,27 @@ namespace FalconParking.Domain
         #region Metodos Apply
 
         public void Apply(ParkingSlotOcuppiedEvent parkingEvent) {
-            Apply(parkingEvent.Slot);
+            //Apply(parkingEvent.Slot);
         }
 
         public void Apply(ParkingSlotReservedEvent parkingEvent)
         {
-            Apply(parkingEvent.Slot);
+            //Apply(parkingEvent.Slot);
         }
 
         public void Apply(ParkingSlotFreedEvent parkingEvent)
         {
-            Apply(parkingEvent.Slot);
+            //Apply(parkingEvent.Slot);
         }
 
         public void Apply(ParkingSlotOpenedEvent parkingEvent)
         {
-            Apply(parkingEvent.Slot);
+            //Apply(parkingEvent.Slot);
         }
 
         public void Apply(ParkingSlotClosedEvent parkingEvent)
         {
-            Apply(parkingEvent.Slot);
+            //Apply(parkingEvent.Slot);
         }
 
         public void Apply(ParkingSlot parkingSlot)
