@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FalconParking.Infrastructure.Abstractions;
 using FalconParking.Infrastructure.Commands;
 using FalconParkingAPI.Models;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,20 +16,17 @@ namespace FalconParkingAPI.Controllers
     public class ParkingSlotController : Controller
     {
         private readonly ILogger<ParkingSlotController> _logger;
-        //private readonly IParkingEventRepository _eventsRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _messageBus;
 
         public ParkingSlotController(
             ILogger<ParkingSlotController> logger,
-            //IParkingEventRepository eventsRepository,
             IMapper mapper,
-            IMediator mediator)
+            IMessageBus messageBus)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_eventsRepository = eventsRepository;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
         }
 
         [HttpPost("occupy")]
@@ -39,7 +36,7 @@ namespace FalconParkingAPI.Controllers
         public async Task<string> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
         {
             var command = _mapper.Map<OccupyParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
+            var response = await _messageBus.SendAsync(command);
             return response.ToString();
         }
     }

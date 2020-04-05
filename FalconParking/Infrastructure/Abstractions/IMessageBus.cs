@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FalconParking.Infrastructure.Abstractions.Queries;
+using FalconParking.Infrastructure.Abstractions.Commands;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FalconParking.Infrastructure.Abstractions
 {
-    interface IMessageBus
+    public interface IMessageBus
     {
-        //Task<TResponse> SendAsync<TResponse>(Commands.ICommand<TResponse> request, CancellationToken token = default);
-        //Task<TResponse> SendAsync<TResponse>(IQuery<TResponse> request, CancellationToken token = default);
-        //Task PublishAsync<TEvent>(TEvent eventMessage, CancellationToken token = new CancellationToken()) where TEvent : IDomainEvent;
-        //Task DispatchEventsAsync(IEnumerable<IDomainEvent> @event, CancellationToken token = default);
+        Task<TResponse> SendAsync<TResponse>(ICommand<TResponse> request, CancellationToken cancellationToken = default);
+        Task<TResponse> SendAsync<TResponse>(IQuery<TResponse> request, CancellationToken cancellationToken = default);
     }
 }
