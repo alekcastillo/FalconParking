@@ -42,27 +42,5 @@ namespace FalconParkingAPI.Controllers
             var response = await _mediator.Send(command);
             return response.ToString();
         }
-
-        [HttpPost("reserve")]
-        [ProducesResponseType(typeof(Guid), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public async Task<string> ReserveParkingSlot([FromBody] OccupyParkingSlotRequest request)
-        {
-            var command = _mapper.Map<ReserveParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
-        }
-
-        [HttpPost("reserve")]
-        [ProducesResponseType(typeof(Guid), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public async Task<string> FreeParkingSlot([FromBody] OccupyParkingSlotRequest request)
-        {
-            var command = _mapper.Map<FreeParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
-        }
     }
 }
