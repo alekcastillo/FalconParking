@@ -52,10 +52,10 @@ namespace FalconParking.Infrastructure.Repositories
                        where e.AggregateId == id
                        select e;
 
-            var eventsToApply = events.ToList<DomainEvent>()
-                .Select(e => e.DeserializeEvent());
+            //var eventsToApply = events.ToList<DomainEvent>()
+                //.Select(e => e.DeserializeEvent());
 
-            aggregate.InitializeDomainEventHistory(eventsToApply);
+            //aggregate.InitializeDomainEventHistory(eventsToApply);
 
             return aggregate;
         }

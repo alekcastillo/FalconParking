@@ -1,8 +1,4 @@
-﻿using FalconParking.Domain.Abstractions.Events;
-using FalconParking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace FalconParking.Domain.Events
 {
@@ -11,8 +7,12 @@ namespace FalconParking.Domain.Events
         public int ParkingSlotId { get; }
 
         protected ParkingSlotEvent(
-            int parkingLotId,
-            int parkingSlotId) : base(parkingLotId)
+            int parkingLotId
+            ,int parkingSlotId
+            ,int userId
+        ) : base(
+            parkingLotId
+            ,userId)
         {
             ParkingSlotId = parkingSlotId;
         }

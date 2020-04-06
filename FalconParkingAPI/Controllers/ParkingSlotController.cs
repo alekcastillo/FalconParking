@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FalconParking.Application.Commands;
 using FalconParking.Infrastructure.Abstractions;
-using FalconParking.Infrastructure.Commands;
 using FalconParkingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,9 +20,9 @@ namespace FalconParkingAPI.Controllers
         private readonly IMessageBus _messageBus;
 
         public ParkingSlotController(
-            ILogger<ParkingSlotController> logger,
-            IMapper mapper,
-            IMessageBus messageBus)
+            ILogger<ParkingSlotController> logger
+            ,IMapper mapper
+            ,IMessageBus messageBus)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

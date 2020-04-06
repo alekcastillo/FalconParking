@@ -12,19 +12,14 @@ namespace FalconParking.Domain.Events
         public ParkingSlotOcuppiedEvent(
             int parkingLotId
             ,int parkingSlotId
-            ,string carLicensePlate) : base(parkingLotId, parkingSlotId)
+            ,int userId
+            ,string carLicensePlate
+         ) : base(
+            parkingLotId
+            ,parkingSlotId
+            ,userId)
         {
             CarLicensePlate = carLicensePlate;
-        }
-
-        //This MUST be changed
-        public override string ToString()
-        {
-            return "{" +
-                $"\"ParkingSlotId\" : {ParkingSlotId}" +
-                $"\"CarLicensePlate\" : {CarLicensePlate}" +
-                //$"\"UserIdentification\" : {UserIdentification}" +
-                "}";
         }
     }
 }

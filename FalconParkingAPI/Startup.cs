@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FalconParking.Infrastructure.Commands;
-using FalconParking.Infrastructure.Commands.Handlers;
 using FalconParkingAPI.Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +18,10 @@ using FalconParking.Domain;
 using FalconParking.Infrastructure.Repositories;
 using FalconParking.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using FalconParking.Application.Commands;
+using FalconParking.Application.Commands.Handlers;
+using FalconParking.Infrastructure.Abstractions;
+using FalconParking.Infrastructure.MessageBus;
 
 namespace FalconParkingAPI
 {
@@ -42,6 +44,7 @@ namespace FalconParkingAPI
             services.AddControllers();
             //Mediator handlers
             services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(OccupyParkingSlotCommandHandler).Assembly);
+            services.AddScoped<IMessageBus, MessageBus>();
             //Mappers
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);
             //Repositories

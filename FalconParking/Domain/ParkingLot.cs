@@ -118,47 +118,8 @@ namespace FalconParking.Domain
             RaiseEvent(new ParkingSlotOcuppiedEvent(
                 AggregateId
                 ,parkingSlotId
+                ,1
                 ,carLicensePlate));
-        }
-
-        public void ReserveSlot(int parkingSlotId, string carLicensePlate, ParkingSlotReservationTime reservationTime)
-        {
-            var slot = GetSlotById(parkingSlotId);
-
-            if (!slot.isAvailable())
-                throw new DomainException($"El espacio {parkingSlotId} del parqueo {Code} no esta disponible para reservar");
-
-            slot.Reserve(carLicensePlate, reservationTime);
-            AvailableSlotsCount--;
-
-            //RaiseEvent(new ParkingSlotReservedEvent(AggregateId, slot));
-        }
-
-        private void FreeSlot(string carLicensePlate)
-        {
-            var slot = GetSlotByOcuppantCarLicensePlate(carLicensePlate);
-            slot.Free();
-            AvailableSlotsCount++;
-
-            //RaiseEvent(new ParkingSlotFreedEvent(AggregateId, slot));
-        }
-
-        private void OpenSlot(int parkingSlotId)
-        {
-            var slot = GetSlotById(parkingSlotId);
-            slot.Open();
-            AvailableSlotsCount++;
-
-            //RaiseEvent(new ParkingSlotOpenedEvent(AggregateId, slot));
-        }
-
-        private void CloseSlot(int parkingSlotId)
-        {
-            var slot = GetSlotById(parkingSlotId);
-            slot.Close();
-            AvailableSlotsCount--;
-
-            //RaiseEvent(new ParkingSlotClosedEvent(AggregateId, slot));
         }
 
         #endregion
@@ -166,35 +127,12 @@ namespace FalconParking.Domain
         #region Metodos Apply
 
         public void Apply(ParkingSlotOcuppiedEvent parkingEvent) {
-            //Apply(parkingEvent.Slot);
-        }
+            var slot = GetSlotById(parkingEvent.ParkingSlotId);
 
-        public void Apply(ParkingSlotReservedEvent parkingEvent)
-        {
-            //Apply(parkingEvent.Slot);
-        }
-
-        public void Apply(ParkingSlotFreedEvent parkingEvent)
-        {
-            //Apply(parkingEvent.Slot);
-        }
-
-        public void Apply(ParkingSlotOpenedEvent parkingEvent)
-        {
-            //Apply(parkingEvent.Slot);
-        }
-
-        public void Apply(ParkingSlotClosedEvent parkingEvent)
-        {
-            //Apply(parkingEvent.Slot);
-        }
-
-        public void Apply(ParkingSlot parkingSlot)
-        {
-            var parkingSlotId = parkingSlot.Id;
-
-            if (parkingSlotId > -1 && AvailableSlotsCount >= parkingSlotId)
-                _slots[parkingSlot.Id - 1] = parkingSlot;
+            if (slot.isAvailable()) {
+                slot.Ocuppy(parkingEvent.CarLicensePlate);
+                AvailableSlotsCount--;
+            }
         }
 
         #endregion

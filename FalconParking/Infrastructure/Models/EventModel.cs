@@ -1,5 +1,4 @@
-﻿using FalconParking.Domain.Events.Parking;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

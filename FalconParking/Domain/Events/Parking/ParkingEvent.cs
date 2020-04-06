@@ -1,15 +1,16 @@
-﻿using FalconParking.Domain.Abstractions.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FalconParking.Infrastructure.Abstractions.Events;
 
 namespace FalconParking.Domain.Events
 {
     public abstract class ParkingEvent : DomainEvent, IDomainEvent
     {
-        public ParkingEvent(
-            int parkingLotId) : base(parkingLotId)
+        public int UserId { get; }
+
+        protected ParkingEvent(
+            int parkingLotId
+            ,int userId) : base(parkingLotId)
         {
+            UserId = userId;
         }
     }
 }

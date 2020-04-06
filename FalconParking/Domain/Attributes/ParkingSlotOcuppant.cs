@@ -9,9 +9,9 @@ namespace FalconParking.Domain
         public string CarLicensePlate { get; private set; }
 
         public ParkingSlotOcuppant(
-            string CarLicensePlate)
+            string carLicensePlate)
         {
-            CarLicensePlate = CarLicensePlate;
+            CarLicensePlate = carLicensePlate;
         }
 
     }
