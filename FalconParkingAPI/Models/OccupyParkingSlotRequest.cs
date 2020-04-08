@@ -15,10 +15,10 @@ namespace FalconParkingAPI.Models
         public OccupyParkingSlotRequest() { }
 
         public OccupyParkingSlotRequest(
-            int aggregateId,
-            int parkingSlotId,
-            string carLicensePlate,
-            string userIdentification)
+            int aggregateId
+            ,int parkingSlotId
+            ,string carLicensePlate
+            ,string userIdentification)
         {
             AggregateId = aggregateId;
             ParkingSlotId = parkingSlotId;

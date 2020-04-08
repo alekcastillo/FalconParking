@@ -19,7 +19,12 @@ namespace FalconParking.Domain.Views
 
         #endregion
 
-        public ParkingLotView(int aggregateId, string code, int totalSlotsCount, int availableSlotsCount, int status)
+        public ParkingLotView(
+            int aggregateId
+            ,string code
+            ,int totalSlotsCount
+            ,int availableSlotsCount
+            ,int status)
         {
             AggregateId = aggregateId;
             Code = code;

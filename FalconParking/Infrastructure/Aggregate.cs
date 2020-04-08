@@ -13,7 +13,8 @@ namespace FalconParking.Domain
         private readonly List<DomainEvent> _domainEventHistory = new List<DomainEvent>();
         private readonly List<DomainEvent> _uncommittedDomainEvents = new List<DomainEvent>();
 
-        protected Aggregate(int aggregateId)
+        protected Aggregate(
+            int aggregateId)
         {
             this.AggregateId = aggregateId;
         }

@@ -14,7 +14,8 @@ namespace FalconParking.Infrastructure.MessageBus
     {
         private readonly IMediator _bus;
 
-        public MessageBus(IMediator bus)
+        public MessageBus(
+            IMediator bus)
         {
             _bus = bus;
         }

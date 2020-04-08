@@ -12,13 +12,14 @@ namespace FalconParking.Domain.Views
         #region Atributos
 
         public int AggregateId { get; private set; }
-
         public int Id { get; private set; }
         public int Status { get; private set; }
 
         #endregion
 
-        public ParkingSlotView(int id, int status)
+        public ParkingSlotView(
+            int id
+            ,int status)
         {
             Id = id;
             Status = status;

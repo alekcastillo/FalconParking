@@ -18,7 +18,11 @@ namespace FalconParking.Infrastructure.Models
         [Column(TypeName = "jsonb")]
         public string EventData { get; private set; }
 
-        public EventModel(Guid eventId, int aggregateId, string eventType, string eventData)
+        public EventModel(
+            Guid eventId
+            ,int aggregateId
+            ,string eventType
+            ,string eventData)
         {
             EventId = eventId;
             AggregateId = aggregateId;

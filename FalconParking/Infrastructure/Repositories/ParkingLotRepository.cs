@@ -16,7 +16,8 @@ namespace FalconParking.Infrastructure.Repositories
     {
         private readonly FalconParkingDbContext context;
 
-        public ParkingLotRepository(FalconParkingDbContext dbContext)
+        public ParkingLotRepository(
+            FalconParkingDbContext dbContext)
         {
             context = dbContext;
         }

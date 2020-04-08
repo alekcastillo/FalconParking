@@ -13,15 +13,13 @@ namespace FalconParkingAPI.Controllers
     public class ParkingLotController : Controller
     {
         private readonly ILogger<ParkingLotController> _logger;
-        //private readonly IParkingEventRepository _eventsRepository;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
         public ParkingLotController(
-            ILogger<ParkingLotController> logger,
-            //IParkingEventRepository eventsRepository,
-            IMapper mapper,
-            IMediator mediator)
+            ILogger<ParkingLotController> logger
+            ,IMapper mapper
+            ,IMediator mediator)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             //_eventsRepository = eventsRepository;
