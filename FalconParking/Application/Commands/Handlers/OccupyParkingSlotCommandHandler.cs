@@ -21,11 +21,13 @@ namespace FalconParking.Application.Commands.Handlers
             OccupyParkingSlotCommand command
             ,CancellationToken token = new CancellationToken())
         {
-            var parkingLot = _repository.Get(command.AggregateId);
+            var parkingLot = _repository.GetById(command.AggregateId);
 
             //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
 
             parkingLot.OcuppySlot(command.ParkingSlotId, command.CarLicensePlate);
+
+            _repository.Save(parkingLot);
 
             return "";
         }

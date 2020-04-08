@@ -1,30 +1,67 @@
 ﻿using FalconParking.Domain;
-using FalconParking.Domain.Abstractions.Repositories;
-using FalconParking.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq;
+using FalconParking.Domain.Attributes;
+using FalconParking.Domain.Entities;
+using FalconParking.Infrastructure.Events;
+using FalconParking.Domain.Events;
+using FalconParking.Domain.Abstractions.Repositories;
 
 namespace FalconParking.Infrastructure.Repositories
 {
     public class ParkingLotRepository : IParkingLotRepository
     {
-        private readonly ParkingLot[] _parkingLots;
+        private readonly FalconParkingDbContext context;
 
-        public ParkingLotRepository()
+        public ParkingLotRepository(FalconParkingDbContext dbContext)
         {
-            _parkingLots = new ParkingLot[3];
-            _parkingLots[0] = ParkingLot.New(0, "A", 0.0f, 0.0f, 20);
-            _parkingLots[1] = ParkingLot.New(1, "B", 0.0f, 0.0f, 10);
-            _parkingLots[2] = ParkingLot.New(2, "C", 0.0f, 0.0f, 5);
+            context = dbContext;
         }
 
-        public ParkingLot Get(int id)
+        //MAKE ASYNC
+
+        public void Save(ParkingLot aggregate) //change to IAggregate
         {
-            return _parkingLots[id - 1];
+            var events = aggregate.GetUncommittedDomainEvents();
+            if (events.Count < 1)
+                return;
+
+            var aggregateType = aggregate.GetType().Name;
+
+            var eventsToSave = events
+                .Select(e => e.ToEventModel())
+                .ToArray();
+            // more code...
+
+            context.ParkingLotEvents.AddRange(eventsToSave);
+
+            aggregate.CommitDomainEvents();
+        }
+
+        public ParkingLot GetById(int id)
+        {
+            var aggregate = new ParkingLot(
+                id
+                ,"A"
+                ,0.00f
+                ,0.00f
+                ,30
+                ,ParkingLotStatus.Open
+                ,new ParkingSlot[30]);
+
+            var events = from e in context.ParkingLotEvents
+                       where e.AggregateId == id
+                       select e;
+
+            var eventsToApply = events.ToList()
+                .Select(e => (DomainEvent) e.DeserializeEvent());
+
+            aggregate.InitializeDomainEventHistory(eventsToApply);
+
+            return aggregate;
         }
     }
 }

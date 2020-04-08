@@ -72,11 +72,11 @@ namespace FalconParking.Domain
         #region Metodos publicos
 
         public static ParkingLot New(
-            int aggregateId,
-            string code,
-            float x,
-            float y,
-            int totalSlotsCount)
+            int aggregateId
+            ,string code
+            ,float x
+            ,float y
+            ,int totalSlotsCount)
         {
             if (totalSlotsCount < 1)
                 throw new ArgumentException($"No se puede crear un parqueo con menos de un campo!");
