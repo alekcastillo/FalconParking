@@ -24,7 +24,7 @@ namespace FalconParking.Domain
 
         #region Constructor
 
-        public ParkingLot( //needs privatizing
+        private ParkingLot(
             int aggregateId
             ,string code
             ,float x

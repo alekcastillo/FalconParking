@@ -8,6 +8,7 @@ namespace FalconParking.Domain
     public class ParkingSlotReserver : ParkingSlotOcuppant
     {
         private ParkingSlotReservationTime reservationTime { get; set; }
+
         public ParkingSlotReserver(
             string CarLicensePlate,
             ParkingSlotReservationTime ReservationTime) : base(CarLicensePlate)

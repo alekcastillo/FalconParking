@@ -1,4 +1,5 @@
 ﻿using FalconParking.Domain.Events;
+using FalconParking.Infrastructure.Abstractions.Events;
 using FalconParking.Infrastructure.Models;
 using Newtonsoft.Json;
 using System;
@@ -9,20 +10,32 @@ namespace FalconParking.Infrastructure.Events
 {
     public static class EventExtensions
     {
-        public static EventModel ToEventModel(this DomainEvent domainEvent)
+        public static EventModel ToEventModel(this object domainEvent)
         {
+            var DomainEvent = (DomainEvent) domainEvent;
+
             return new EventModel(
-                new Guid(),
-                domainEvent.AggregateId,
-                domainEvent.GetType().Name,
-                "{}"
-                );
+                new Guid()
+                ,DomainEvent.AggregateId
+                ,DomainEvent.GetType().Name
+                ,JsonConvert.SerializeObject(DomainEvent)
+                ,DomainEvent.TimeCreated);
         }
 
-        public static object DeserializeEvent(this EventModel eventModel)
+        public static IDomainEvent DeserializeEvent(this EventModel eventModel)
         {
-            var eventClrTypeName = eventModel.EventType;
-            return JsonConvert.DeserializeObject(eventModel.EventData, Type.GetType(eventModel.EventType));
+            var eventType = default(Type);
+
+            try
+            {
+                eventType = Type.GetType($"FalconParking.Domain.Events.{eventModel.EventType}");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Class load error, because: {0}", ex));
+            }
+
+            return (IDomainEvent) JsonConvert.DeserializeObject(eventModel.EventData, eventType);
         }
     }
 }

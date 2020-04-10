@@ -22,7 +22,6 @@ namespace FalconParkingAPI.Controllers
             ,IMediator mediator)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_eventsRepository = eventsRepository;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }

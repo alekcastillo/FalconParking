@@ -1,14 +1,10 @@
-﻿using FalconParking.Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using FalconParking.Domain.Attributes;
-using FalconParking.Domain.Entities;
+﻿using System.Linq;
 using FalconParking.Infrastructure.Events;
+using FalconParking.Domain;
 using FalconParking.Domain.Events;
 using FalconParking.Domain.Abstractions.Repositories;
+using FalconParking.Domain.Factories;
+using System;
 
 namespace FalconParking.Infrastructure.Repositories
 {
@@ -38,27 +34,22 @@ namespace FalconParking.Infrastructure.Repositories
             // more code...
 
             context.ParkingLotEvents.AddRange(eventsToSave);
+            context.SaveChanges();
 
             aggregate.CommitDomainEvents();
         }
 
         public ParkingLot GetById(int id)
         {
-            var aggregate = new ParkingLot(
-                id
-                ,"A"
-                ,0.00f
-                ,0.00f
-                ,30
-                ,ParkingLotStatus.Open
-                ,new ParkingSlot[30]);
+            var aggregate = ParkingLotFactory.CreateParkingLot(id);
 
             var events = from e in context.ParkingLotEvents
-                       where e.AggregateId == id
+                       where e.AggregateId == id - 1
+                       //orderby e.
                        select e;
 
             var eventsToApply = events.ToList()
-                .Select(e => (DomainEvent) e.DeserializeEvent());
+                .Select(e => e.DeserializeEvent());
 
             aggregate.InitializeDomainEventHistory(eventsToApply);
 

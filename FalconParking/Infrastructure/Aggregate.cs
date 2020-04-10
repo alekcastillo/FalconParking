@@ -1,4 +1,5 @@
 ﻿using FalconParking.Domain.Events;
+using FalconParking.Infrastructure.Abstractions.Events;
 using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace FalconParking.Domain
     {
         public int AggregateId { get; protected set; }
         private bool _domainEventHistoryInitialized;
-        private readonly List<DomainEvent> _domainEventHistory = new List<DomainEvent>();
-        private readonly List<DomainEvent> _uncommittedDomainEvents = new List<DomainEvent>();
+        private readonly List<IDomainEvent> _domainEventHistory = new List<IDomainEvent>();
+        private readonly List<IDomainEvent> _uncommittedDomainEvents = new List<IDomainEvent>();
 
         protected Aggregate(
             int aggregateId)
@@ -19,17 +20,17 @@ namespace FalconParking.Domain
             this.AggregateId = aggregateId;
         }
 
-        public List<DomainEvent> GetDomainEventHistory()
+        public List<IDomainEvent> GetDomainEventHistory()
         {
             return _domainEventHistory;
         }
 
-        public List<DomainEvent> GetUncommittedDomainEvents()
+        public List<IDomainEvent> GetUncommittedDomainEvents()
         {
             return _uncommittedDomainEvents;
         }
 
-        private void ApplyDomainEvent(DomainEvent domainEvent)
+        private void ApplyDomainEvent(IDomainEvent domainEvent)
         {
             try
             {
@@ -47,16 +48,19 @@ namespace FalconParking.Domain
             _uncommittedDomainEvents.Clear();
         }
 
-        protected void RaiseEvent(DomainEvent domainEvent)
+        protected void RaiseEvent(IDomainEvent domainEvent)
         {
             //If the event is unable to be applied should it still be added to the uncommited log?
             this.ApplyDomainEvent(domainEvent);
             _uncommittedDomainEvents.Add(domainEvent);
         }
 
-        public void InitializeDomainEventHistory(IEnumerable<DomainEvent> domainEventHistory)
+        public void InitializeDomainEventHistory(IEnumerable<IDomainEvent> domainEventHistory)
         {
-            // Add the entire domain event history to aggregate state
+            foreach (var domainEvent in domainEventHistory) {
+                ApplyDomainEvent(domainEvent);
+            }
+
             _domainEventHistory.AddRange(domainEventHistory);
 
             _domainEventHistoryInitialized = true;
