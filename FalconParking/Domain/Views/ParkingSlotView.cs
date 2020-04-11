@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System;
 
 namespace FalconParking.Domain.Views
 {
@@ -11,18 +6,27 @@ namespace FalconParking.Domain.Views
     {
         #region Atributos
 
-        public int AggregateId { get; private set; }
-        public int Id { get; private set; }
-        public int Status { get; private set; }
+        public int AggregateId { get; set; }
+        public int Id { get; set; }
+        public int Status { get; set; }
+        public string OccupantLicensePlate { get; set; }
+        public DateTimeOffset UpdatedTime { get; set; }
+        public string UpdatedBy { get; set; }
 
         #endregion
 
         public ParkingSlotView(
-            int id
-            ,int status)
+            int aggregateId
+            ,int id
+            ,int status
+            ,DateTimeOffset updatedTime
+            ,string updatedBy)
         {
+            AggregateId = aggregateId;
             Id = id;
             Status = status;
+            UpdatedTime = updatedTime;
+            UpdatedBy = updatedBy;
         }
     }
 }

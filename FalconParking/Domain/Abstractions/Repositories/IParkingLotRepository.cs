@@ -1,4 +1,10 @@
-﻿namespace FalconParking.Domain.Abstractions.Repositories
+﻿using System.Threading.Tasks;
+
+namespace FalconParking.Domain.Abstractions.Repositories
 {
-    public interface IParkingLotRepository : IAggregateRepository<ParkingLot> {}
+    public interface IParkingLotRepository
+    {
+        Task SaveAsync(ParkingLot aggregate);
+        Task<ParkingLot> GetByIdAsync(int aggregateId);
+    }
 }

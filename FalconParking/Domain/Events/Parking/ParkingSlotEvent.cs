@@ -8,8 +8,8 @@ namespace FalconParking.Domain.Events
 
         protected ParkingSlotEvent(
             int parkingLotId
-            ,int parkingSlotId
             ,int userId
+            ,int parkingSlotId
         ) : base(
             parkingLotId
             ,userId)

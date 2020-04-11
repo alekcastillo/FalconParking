@@ -16,6 +16,8 @@ namespace FalconParking.Domain.Views
         public int AvailableSlotsCount { get; private set; }
         public int Status { get; private set; }
         public List<ParkingSlotView> Slots { get; private set; }
+        public DateTimeOffset UpdatedTime { get; private set; }
+        public string UpdatedBy { get; private set; }
 
         #endregion
 
@@ -24,7 +26,9 @@ namespace FalconParking.Domain.Views
             ,string code
             ,int totalSlotsCount
             ,int availableSlotsCount
-            ,int status)
+            ,int status
+            ,DateTimeOffset updatedTime
+            ,string updatedBy)
         {
             AggregateId = aggregateId;
             Code = code;
@@ -32,6 +36,8 @@ namespace FalconParking.Domain.Views
             AvailableSlotsCount = availableSlotsCount;
             Status = status;
             Slots = new List<ParkingSlotView>();
+            UpdatedTime = updatedTime;
+            UpdatedBy = updatedBy;
         }
     }
 }

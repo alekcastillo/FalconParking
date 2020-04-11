@@ -11,13 +11,13 @@ namespace FalconParking.Domain.Events
 
         public ParkingSlotOcuppiedEvent(
             int parkingLotId
-            ,int parkingSlotId
             ,int userId
+            ,int parkingSlotId
             ,string carLicensePlate
          ) : base(
             parkingLotId
-            ,parkingSlotId
-            ,userId)
+            ,userId
+            ,parkingSlotId)
         {
             CarLicensePlate = carLicensePlate;
         }

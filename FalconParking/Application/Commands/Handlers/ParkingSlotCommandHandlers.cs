@@ -8,10 +8,12 @@ namespace FalconParking.Application.Commands.Handlers
     /// <summary>
     /// Handles the OccupyParkingSlotCommand
     /// </summary>
-    public class OccupyParkingSlotCommandHandler : ICommandHandler<OccupyParkingSlotCommand, string>
+    public class ParkingSlotCommandHandlers :
+        ICommandHandler<OccupyParkingSlotCommand, string>
+        //,ICommandHandler<FreeParkingSlotCommand, string>
     {
         private readonly IParkingLotRepository _repository;
-        public OccupyParkingSlotCommandHandler(
+        public ParkingSlotCommandHandlers(
             IParkingLotRepository repository)
         {
             _repository = repository;
@@ -21,13 +23,13 @@ namespace FalconParking.Application.Commands.Handlers
             OccupyParkingSlotCommand command
             ,CancellationToken token = new CancellationToken())
         {
-            var parkingLot = _repository.GetById(command.AggregateId);
+            var parkingLot = await _repository.GetByIdAsync(command.AggregateId);
 
             //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
 
             parkingLot.OcuppySlot(command.ParkingSlotId, command.CarLicensePlate);
 
-            _repository.Save(parkingLot);
+            await _repository.SaveAsync(parkingLot);
 
             return "";
         }

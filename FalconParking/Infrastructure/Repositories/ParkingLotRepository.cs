@@ -5,6 +5,8 @@ using FalconParking.Domain.Events;
 using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain.Factories;
 using System;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FalconParking.Infrastructure.Repositories
 {
@@ -20,36 +22,32 @@ namespace FalconParking.Infrastructure.Repositories
 
         //MAKE ASYNC
 
-        public void Save(ParkingLot aggregate) //change to IAggregate
+        public async Task SaveAsync(ParkingLot aggregate) //change to IAggregate
         {
             var events = aggregate.GetUncommittedDomainEvents();
             if (events.Count < 1)
                 return;
 
             var aggregateType = aggregate.GetType().Name;
-
             var eventsToSave = events
-                .Select(e => e.ToEventModel())
+                .Select(e => e.SerializeEvent())
                 .ToArray();
-            // more code...
 
             context.ParkingLotEvents.AddRange(eventsToSave);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             aggregate.CommitDomainEvents();
         }
 
-        public ParkingLot GetById(int id)
+        public async Task<ParkingLot> GetByIdAsync(int id)
         {
             var aggregate = ParkingLotFactory.CreateParkingLot(id);
-
-            var events = from e in context.ParkingLotEvents
-                       where e.AggregateId == id - 1
-                       //orderby e.
-                       select e;
-
-            var eventsToApply = events.ToList()
-                .Select(e => e.DeserializeEvent());
+            var events = await context.ParkingLotEvents.Where(
+                    e => e.AggregateId == id
+                ).OrderBy(
+                    e => e.CreatedTime
+                ).ToListAsync();
+            var eventsToApply = events.Select(e => e.DeserializeEvent());
 
             aggregate.InitializeDomainEventHistory(eventsToApply);
 

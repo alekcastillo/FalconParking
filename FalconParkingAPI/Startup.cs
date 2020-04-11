@@ -43,7 +43,7 @@ namespace FalconParkingAPI
 
             services.AddControllers();
             //Mediator handlers
-            services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(OccupyParkingSlotCommandHandler).Assembly);
+            services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(ParkingSlotCommandHandlers).Assembly);
             services.AddScoped<IMessageBus, MessageBus>();
             //Mappers
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);

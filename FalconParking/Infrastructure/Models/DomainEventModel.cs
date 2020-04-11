@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FalconParking.Infrastructure.Models
 {
-    public class EventModel
+    public abstract class DomainEventModel
     {
         [Key]
         public Guid EventId { get; private set; }
@@ -17,20 +17,20 @@ namespace FalconParking.Infrastructure.Models
 
         [Column(TypeName = "jsonb")]
         public string EventData { get; private set; }
-        public DateTimeOffset TimeCreated { get; private set; }
+        public DateTimeOffset CreatedTime { get; private set; }
 
-        public EventModel(
+        public DomainEventModel(
             Guid eventId
             ,int aggregateId
             ,string eventType
             ,string eventData
-            ,DateTimeOffset timeCreated)
+            ,DateTimeOffset createdTime)
         {
             EventId = eventId;
             AggregateId = aggregateId;
             EventType = eventType;
             EventData = eventData;
-            TimeCreated = timeCreated;
+            CreatedTime = createdTime;
         }
     }
 }

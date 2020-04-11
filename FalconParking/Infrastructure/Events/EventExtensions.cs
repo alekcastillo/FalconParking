@@ -10,21 +10,19 @@ namespace FalconParking.Infrastructure.Events
 {
     public static class EventExtensions
     {
-        public static EventModel ToEventModel(this object domainEvent)
+        public static ParkingLotEventModel SerializeEvent(this IDomainEvent domainEvent)
         {
-            var DomainEvent = (DomainEvent) domainEvent;
-
-            return new EventModel(
+            return new ParkingLotEventModel(
                 new Guid()
-                ,DomainEvent.AggregateId
-                ,DomainEvent.GetType().Name
-                ,JsonConvert.SerializeObject(DomainEvent)
-                ,DomainEvent.TimeCreated);
+                ,domainEvent.AggregateId
+                ,domainEvent.GetType().Name
+                ,JsonConvert.SerializeObject(domainEvent)
+                ,domainEvent.TimeCreated);
         }
 
-        public static IDomainEvent DeserializeEvent(this EventModel eventModel)
+        public static IDomainEvent DeserializeEvent(this DomainEventModel eventModel)
         {
-            var eventType = default(Type);
+            Type eventType;
 
             try
             {
@@ -32,7 +30,7 @@ namespace FalconParking.Infrastructure.Events
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format("Class load error, because: {0}", ex));
+                throw new InvalidOperationException($"Error al serializar evento: {ex}");
             }
 
             return (IDomainEvent) JsonConvert.DeserializeObject(eventModel.EventData, eventType);
