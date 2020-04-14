@@ -7,8 +7,8 @@ namespace FalconParking.Domain.Events
         public int UserId { get; }
 
         protected ParkingEvent(
-            int parkingLotId
-            ,int userId) : base(parkingLotId)
+            int aggregateId
+            ,int userId) : base(aggregateId)
         {
             UserId = userId;
         }

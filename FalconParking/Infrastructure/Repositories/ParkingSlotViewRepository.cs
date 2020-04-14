@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FalconParking.Infrastructure.Repositories
 {
-    class ParkingSlotViewRepository : IParkingSlotViewRepository
+    public class ParkingSlotViewRepository : IParkingSlotViewRepository
     {
         private readonly FalconParkingDbContext context;
 
@@ -19,10 +19,10 @@ namespace FalconParking.Infrastructure.Repositories
             context = dbContext;
         }
 
-        public async Task<ParkingSlotView> GetByIdAsync(int aggregateId, int id)
+        public async Task<ParkingSlotView> GetByIdAsync(int aggregateId)
         {
             var view = await context.ParkingSlotViews.FirstOrDefaultAsync(
-                e => e.AggregateId == aggregateId && e.Id == id
+                e => e.AggregateId == aggregateId
             );
 
             return view;
@@ -30,7 +30,7 @@ namespace FalconParking.Infrastructure.Repositories
 
         public async Task SaveAsync(ParkingSlotView view)
         {
-            var existingView = await GetByIdAsync(view.AggregateId, view.Id);
+            var existingView = await GetByIdAsync(view.AggregateId);
 
             if (existingView != null) {
                 existingView.Status = view.Status;

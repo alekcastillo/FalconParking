@@ -49,6 +49,8 @@ namespace FalconParkingAPI
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);
             //Repositories
             services.AddTransient<IParkingLotRepository, ParkingLotRepository>();
+            services.AddTransient<IParkingSlotRepository, ParkingSlotRepository>();
+            services.AddTransient<IParkingSlotViewRepository, ParkingSlotViewRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

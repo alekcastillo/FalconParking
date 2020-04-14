@@ -13,17 +13,20 @@ namespace FalconParking.Infrastructure
             DbContextOptions<FalconParkingDbContext> options) : base(options)
         {}
 
-        public DbSet<ParkingLotView> ParkingLotViews { get; }
-        public DbSet<ParkingSlotView> ParkingSlotViews { get; }
         public DbSet<ParkingLotEventModel> ParkingLotEvents { get; }
+        public DbSet<ParkingLotView> ParkingLotViews { get; }
+        public DbSet<ParkingSlotEventModel> ParkingSlotEvents { get; }
+        public DbSet<ParkingSlotView> ParkingSlotViews { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ParkingLotView>().ToTable("lot_view", "parking");
-            modelBuilder.Entity<ParkingSlotView>().ToTable("slot_view", "parking");
+            modelBuilder.Entity<ParkingLotView>()
+                .HasKey(c => c.AggregateId);
 
+            modelBuilder.Entity<ParkingSlotView>().ToTable("slot_view", "parking");
             modelBuilder.Entity<ParkingSlotView>()
-                .HasKey(c => new { c.AggregateId, c.Id });
+                .HasKey(c => c.AggregateId);
         }
     }
 }

@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using System.Threading;
 using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain.Views;
+using FalconParking.Domain.Events.Parking;
+using FalconParking.Domain.Entities;
 
 namespace FalconParking.Application.Events.Handlers
 {
     public class ParkingSlotEventHandlers :
-        IEventHandler<ParkingSlotOcuppiedEvent>
+        IEventHandler<ParkingSlotOccupiedEvent>
     {
         private readonly IParkingSlotViewRepository _slotsRepository;
 
@@ -18,9 +20,15 @@ namespace FalconParking.Application.Events.Handlers
             _slotsRepository = slotsRepository;
         }
 
-        public async Task Handle(ParkingSlotOcuppiedEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ParkingSlotOccupiedEvent notification, CancellationToken cancellationToken)
         {
-            var slot = await _slotsRepository.GetByIdAsync(notification.AggregateId, notification.ParkingSlotId);
+            var view = new ParkingSlotView(
+                notification.AggregateId
+                ,(int) ParkingSlotStatus.Occuppied
+                ,notification.TimeCreated
+                ,notification.UserId.ToString());
+
+            var slot = await _slotsRepository.GetByIdAsync(notification.AggregateId);
 
 
         }

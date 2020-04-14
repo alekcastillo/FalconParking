@@ -1,9 +1,7 @@
-﻿using FalconParking.Domain.Events;
-using FalconParking.Infrastructure.Abstractions.Events;
+﻿using FalconParking.Infrastructure.Abstractions.Events;
 using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FalconParking.Domain
 {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FalconParking.Domain
 {
-    public class ParkingSlotReserver : ParkingSlotOcuppant
+    public class ParkingSlotReserver : ParkingSlotOccupant
     {
         private ParkingSlotReservationTime reservationTime { get; set; }
 

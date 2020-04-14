@@ -1,20 +1,22 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace FalconParking.Domain.Events
+namespace FalconParking.Domain.Events.Parking
 {
-    public abstract class ParkingSlotEvent : ParkingEvent
+    public class ParkingSlotEvent : ParkingEvent
     {
-        public int ParkingSlotId { get; }
+        public ParkingSlotOccupant Occupant { get; }
 
         protected ParkingSlotEvent(
-            int parkingLotId
+            int aggregateId
             ,int userId
-            ,int parkingSlotId
+            , ParkingSlotOccupant occupant
         ) : base(
-            parkingLotId
+            aggregateId
             ,userId)
         {
-            ParkingSlotId = parkingSlotId;
+            Occupant = occupant;
         }
     }
 }

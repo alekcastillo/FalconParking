@@ -8,11 +8,23 @@ using System.Text;
 
 namespace FalconParking.Infrastructure.Events
 {
+    //This whole class must change as well
+
     public static class EventExtensions
     {
-        public static ParkingLotEventModel SerializeEvent(this IDomainEvent domainEvent)
+        public static ParkingLotEventModel ToParkingLotEvent(this IDomainEvent domainEvent)
         {
             return new ParkingLotEventModel(
+                new Guid()
+                ,domainEvent.AggregateId
+                ,domainEvent.GetType().Name
+                ,JsonConvert.SerializeObject(domainEvent)
+                ,domainEvent.TimeCreated);
+        }
+
+        public static ParkingSlotEventModel ToParkingSlotEvent(this IDomainEvent domainEvent)
+        {
+            return new ParkingSlotEventModel(
                 new Guid()
                 ,domainEvent.AggregateId
                 ,domainEvent.GetType().Name

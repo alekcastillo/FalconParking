@@ -4,11 +4,11 @@ using System.Text;
 
 namespace FalconParking.Domain
 {
-    public class ParkingSlotOcuppant
+    public class ParkingSlotOccupant
     {
         public string CarLicensePlate { get; private set; }
 
-        public ParkingSlotOcuppant(
+        public ParkingSlotOccupant(
             string carLicensePlate)
         {
             CarLicensePlate = carLicensePlate;

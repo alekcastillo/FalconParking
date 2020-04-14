@@ -8,7 +8,7 @@ namespace FalconParking.Domain.Abstractions.Repositories
 {
     public interface IParkingSlotViewRepository
     {
-        Task<ParkingSlotView> GetByIdAsync(int aggregateId, int slotId);
+        Task<ParkingSlotView> GetByIdAsync(int aggregateId);
         Task SaveAsync(ParkingSlotView slotView);
     }
 }

@@ -7,7 +7,6 @@ namespace FalconParking.Domain.Views
         #region Atributos
 
         public int AggregateId { get; set; }
-        public int Id { get; set; }
         public int Status { get; set; }
         public string OccupantLicensePlate { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
@@ -17,13 +16,11 @@ namespace FalconParking.Domain.Views
 
         public ParkingSlotView(
             int aggregateId
-            ,int id
             ,int status
             ,DateTimeOffset updatedTime
             ,string updatedBy)
         {
             AggregateId = aggregateId;
-            Id = id;
             Status = status;
             UpdatedTime = updatedTime;
             UpdatedBy = updatedBy;
