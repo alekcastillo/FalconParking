@@ -8,6 +8,11 @@ namespace FalconParkingAPI.Mappings
     {
         public RequestMappingsProfile()
         {
+            //Lot Requests
+            CreateMap<AddParkingLotRequest, AddParkingLotCommand>();
+            CreateMap<OpenParkingLotRequest, OpenParkingLotCommand>();
+
+            //Slot Requests
             CreateMap<OccupyParkingSlotRequest, OccupyParkingSlotCommand>();
         }
     }

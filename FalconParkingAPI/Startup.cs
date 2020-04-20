@@ -22,6 +22,10 @@ using FalconParking.Application.Commands;
 using FalconParking.Application.Commands.Handlers;
 using FalconParking.Infrastructure.Abstractions;
 using FalconParking.Infrastructure.MessageBus;
+using FalconParking.Domain.Events;
+using FalconParking.Application.Events.Handlers;
+using FalconParking.Application.Queries;
+using FalconParking.Application.Queries.Handlers;
 
 namespace FalconParkingAPI
 {
@@ -42,14 +46,17 @@ namespace FalconParkingAPI
                 b => b.MigrationsAssembly("FalconParkingAPI")));
 
             services.AddControllers();
-            //Mediator handlers
-            services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(ParkingSlotCommandHandlers).Assembly);
             services.AddScoped<IMessageBus, MessageBus>();
+
+            //We use any class from the FalconParking project to add MediatR to its queries, commands, events, and handlers
+            services.AddMediatR(typeof(ParkingEvent).Assembly);
+
             //Mappers
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);
             //Repositories
-            services.AddTransient<IParkingLotRepository, ParkingLotRepository>();
-            services.AddTransient<IParkingSlotRepository, ParkingSlotRepository>();
+            services.AddScoped<IParkingLotRepository, ParkingLotRepository>();
+            services.AddTransient<IParkingLotViewRepository, ParkingLotViewRepository>();
+            services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
             services.AddTransient<IParkingSlotViewRepository, ParkingSlotViewRepository>();
         }
 

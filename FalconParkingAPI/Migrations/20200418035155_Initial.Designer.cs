@@ -3,15 +3,17 @@ using System;
 using FalconParking.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FalconParkingAPI.Migrations
 {
     [DbContext(typeof(FalconParkingDbContext))]
-    partial class FalconParkingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200418035155_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace FalconParkingAPI.Migrations
                     b.Property<bool>("IsReservable")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ParkingLotId")
+                    b.Property<Guid?>("ParkingLotViewAggregateId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("SlotNumber")
@@ -77,7 +79,7 @@ namespace FalconParkingAPI.Migrations
 
                     b.HasKey("AggregateId");
 
-                    b.HasIndex("ParkingLotId");
+                    b.HasIndex("ParkingLotViewAggregateId");
 
                     b.ToTable("slot_view","parking");
                 });
@@ -130,11 +132,9 @@ namespace FalconParkingAPI.Migrations
 
             modelBuilder.Entity("FalconParking.Domain.Views.ParkingSlotView", b =>
                 {
-                    b.HasOne("FalconParking.Domain.Views.ParkingLotView", "ParkingLot")
+                    b.HasOne("FalconParking.Domain.Views.ParkingLotView", null)
                         .WithMany("Slots")
-                        .HasForeignKey("ParkingLotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParkingLotViewAggregateId");
                 });
 #pragma warning restore 612, 618
         }

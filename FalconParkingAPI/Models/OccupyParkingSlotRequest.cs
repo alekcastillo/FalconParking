@@ -7,21 +7,21 @@ namespace FalconParkingAPI.Models
 {
     public class OccupyParkingSlotRequest
     {
-        public int AggregateId { get; set; }
-        public int ParkingSlotId { get; set; }
+        public Guid ParkingSlotId { get; set; }
+        public Guid CurrentUserId { get; set; }
         public string CarLicensePlate { get; set; }
         public string UserIdentification { get; set; }
 
         public OccupyParkingSlotRequest() { }
 
         public OccupyParkingSlotRequest(
-            int aggregateId
-            ,int parkingSlotId
+            Guid parkingSlotId
+            ,Guid currentUserId
             ,string carLicensePlate
             ,string userIdentification)
         {
-            AggregateId = aggregateId;
             ParkingSlotId = parkingSlotId;
+            CurrentUserId = currentUserId;
             CarLicensePlate = carLicensePlate;
             UserIdentification = userIdentification;
         }
