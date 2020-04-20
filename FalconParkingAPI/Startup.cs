@@ -45,7 +45,9 @@ namespace FalconParkingAPI
                 opt.UseNpgsql(Configuration.GetConnectionString("FalconParkingDbConnection"),
                 b => b.MigrationsAssembly("FalconParkingAPI")));
 
+            //Prevent the reference loop in parkinglots and slots
             services.AddControllers();
+
             services.AddScoped<IMessageBus, MessageBus>();
 
             //We use any class from the FalconParking project to add MediatR to its queries, commands, events, and handlers
