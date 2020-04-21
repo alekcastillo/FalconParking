@@ -33,12 +33,23 @@ namespace FalconParkingAPI.Controllers
         }
 
         [HttpPost("occupy")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<string> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
         {
             var command = _mapper.Map<OccupyParkingSlotCommand>(request);
+            var response = await _messageBus.SendAsync(command);
+            return response.ToString();
+        }
+
+        [HttpPost("free")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<string> FreeParkingSlot([FromBody] FreeParkingSlotRequest request)
+        {
+            var command = _mapper.Map<FreeParkingSlotCommand>(request);
             var response = await _messageBus.SendAsync(command);
             return response.ToString();
         }

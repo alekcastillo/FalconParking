@@ -46,8 +46,6 @@ namespace FalconParking.Domain
             return slot;
         }
 
-        #endregion
-
         public void Occupy(
             Guid currentUserId
             ,string carLicensePlate)
@@ -61,6 +59,20 @@ namespace FalconParking.Domain
                 ,OccupantLicensePlate));
         }
 
+        public void Free(
+            Guid currentUserId
+            ,string carLicensePlate)
+        {
+            OccupantLicensePlate = null;
+            Status = ParkingSlotStatus.Available;
+
+            RaiseEvent(new ParkingSlotFreedEvent(
+                this.AggregateId
+                ,currentUserId));
+        }
+
+        #endregion
+
         #region Metodos Apply
 
         public void Apply(ParkingSlotAddedEvent e)
@@ -70,10 +82,16 @@ namespace FalconParking.Domain
             IsReservable = e.IsReservable;
         }
 
-        public void Apply(ParkingSlotOccupiedEvent parkingEvent)
+        public void Apply(ParkingSlotOccupiedEvent e)
         {
-            OccupantLicensePlate = parkingEvent.OccupantLicensePlate;
+            OccupantLicensePlate = e.OccupantLicensePlate;
             Status = ParkingSlotStatus.Occuppied;
+        }
+
+        public void Apply(ParkingSlotFreedEvent e)
+        {
+            OccupantLicensePlate = null;
+            Status = ParkingSlotStatus.Available;
         }
 
         #endregion
