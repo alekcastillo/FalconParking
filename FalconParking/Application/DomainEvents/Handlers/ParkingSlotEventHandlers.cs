@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain.Views;
-using FalconParking.Domain.Events.Parking;
 using FalconParking.Domain.Entities;
 
 namespace FalconParking.Application.Events.Handlers
@@ -20,17 +19,14 @@ namespace FalconParking.Application.Events.Handlers
             _slotsRepository = slotsRepository;
         }
 
-        public async Task Handle(ParkingSlotOccupiedEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ParkingSlotOccupiedEvent e, CancellationToken cancellationToken)
         {
-            var view = new ParkingSlotView(
-                notification.AggregateId
-                ,(int) ParkingSlotStatus.Occuppied
-                ,notification.TimeCreated
-                ,notification.UserId.ToString());
+            var slotView = await _slotsRepository.GetByIdAsync(e.AggregateId);
 
-            var slot = await _slotsRepository.GetByIdAsync(notification.AggregateId);
+            slotView.CurrentOccupantLicensePlate = e.OccupantLicensePlate;
+            slotView.Status = (int)ParkingSlotStatus.Occuppied;
 
-
+            await _slotsRepository.SaveAsync(slotView);
         }
     }
 }

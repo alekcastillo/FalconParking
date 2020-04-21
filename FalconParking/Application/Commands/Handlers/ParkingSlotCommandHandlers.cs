@@ -10,7 +10,7 @@ namespace FalconParking.Application.Commands.Handlers
     /// Handles the OccupyParkingSlotCommand
     /// </summary>
     public class ParkingSlotCommandHandlers :
-        ICommandHandler<OccupyParkingSlotCommand, string>
+        ICommandHandler<OccupyParkingSlotCommand, bool>
         //,ICommandHandler<FreeParkingSlotCommand, string>
     {
         private readonly IParkingLotRepository _lotRepository;
@@ -24,16 +24,15 @@ namespace FalconParking.Application.Commands.Handlers
             _slotRepository = slotRepository;
         }
 
-        public async Task<string> Handle(
+        public async Task<bool> Handle(
             OccupyParkingSlotCommand command
             ,CancellationToken token = new CancellationToken())
         {
-
-            var parkingSlot = await _slotRepository.GetByIdAsync(command.AggregateId);
+            var parkingSlot = await _slotRepository.GetByIdAsync(command.ParkingSlotId);
             var parkingLot = await _lotRepository.GetByIdAsync(parkingSlot.ParkingLotId);
 
             if (!parkingLot.isOpen)
-                throw new DomainException($"El parqueo {parkingLot.Code} no esta disponible");
+                throw new DomainException($"El parqueo {parkingLot.Code} no esta abierto");
 
             if (!parkingSlot.isAvailable)
                 throw new DomainException($"El espacio {parkingSlot.SlotNumber} del parqueo {parkingLot.Code} no esta disponible");
@@ -41,12 +40,12 @@ namespace FalconParking.Application.Commands.Handlers
             //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
 
             parkingSlot.Occupy(
-                command.UserId
+                command.CurrentUserId
                 ,command.CarLicensePlate);
 
             await _slotRepository.SaveAsync(parkingSlot);
 
-            return "";
+            return true;
         }
     }
 }

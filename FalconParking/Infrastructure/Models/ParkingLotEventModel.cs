@@ -10,7 +10,7 @@ namespace FalconParking.Infrastructure.Models
     {
         public ParkingLotEventModel(
             Guid eventId
-            ,int aggregateId
+            ,Guid aggregateId
             ,string eventType
             ,string eventData
             ,DateTimeOffset createdTime

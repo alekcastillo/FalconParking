@@ -7,13 +7,13 @@ namespace FalconParking.Domain
 {
     public abstract class Aggregate
     {
-        public int AggregateId { get; protected set; }
+        public Guid AggregateId { get; protected set; }
         private bool _domainEventHistoryInitialized;
         private readonly List<IDomainEvent> _domainEventHistory = new List<IDomainEvent>();
         private readonly List<IDomainEvent> _uncommittedDomainEvents = new List<IDomainEvent>();
 
         protected Aggregate(
-            int aggregateId)
+            Guid aggregateId)
         {
             this.AggregateId = aggregateId;
         }

@@ -5,11 +5,11 @@ namespace FalconParking.Domain.Events
 {
     public class DomainEvent : IDomainEvent
     {
-        public int AggregateId { get; }
+        public Guid AggregateId { get; }
         public DateTimeOffset TimeCreated { get; }
 
         protected DomainEvent(
-            int aggregateId)
+            Guid aggregateId)
         {
             AggregateId = aggregateId;
             TimeCreated = DateTimeOffset.UtcNow;

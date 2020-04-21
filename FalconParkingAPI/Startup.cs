@@ -26,11 +26,15 @@ using FalconParking.Domain.Events;
 using FalconParking.Application.Events.Handlers;
 using FalconParking.Application.Queries;
 using FalconParking.Application.Queries.Handlers;
+using System.Threading;
+using FalconParking.Infrastructure.Tasks;
 
 namespace FalconParkingAPI
 {
     public class Startup
     {
+        private Thread loginSocket;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -60,6 +64,14 @@ namespace FalconParkingAPI
             services.AddTransient<IParkingLotViewRepository, ParkingLotViewRepository>();
             services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
             services.AddTransient<IParkingSlotViewRepository, ParkingSlotViewRepository>();
+
+            StartTasks();
+        }
+
+        private void StartTasks()
+        {
+            loginSocket = new Thread(new ThreadStart(LoginSocketThread.Start));
+            loginSocket.Start();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

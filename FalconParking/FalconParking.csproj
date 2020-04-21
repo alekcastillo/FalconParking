@@ -13,11 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Queries\Handlers\" />
     <Folder Include="Domain\Entities\" />
-    <Folder Include="Infrastructure\Handlers\" />
-    <Folder Include="Infrastructure\Mappings\" />
-    <Folder Include="Infrastructure\Queries\" />
   </ItemGroup>
 
 </Project>

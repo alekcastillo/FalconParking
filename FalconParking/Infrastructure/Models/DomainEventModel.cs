@@ -12,7 +12,7 @@ namespace FalconParking.Infrastructure.Models
     {
         [Key]
         public Guid EventId { get; private set; }
-        public int AggregateId { get; private set; }
+        public Guid AggregateId { get; private set; }
         public string EventType { get; private set; }
 
         [Column(TypeName = "jsonb")]
@@ -21,7 +21,7 @@ namespace FalconParking.Infrastructure.Models
 
         public DomainEventModel(
             Guid eventId
-            ,int aggregateId
+            ,Guid aggregateId
             ,string eventType
             ,string eventData
             ,DateTimeOffset createdTime)

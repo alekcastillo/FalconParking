@@ -5,7 +5,7 @@ namespace FalconParking.Infrastructure.Abstractions.Events
 {
     public interface IDomainEvent : INotification
     {
-        int AggregateId { get; }
+        Guid AggregateId { get; }
         DateTimeOffset TimeCreated { get; }
     }
 }

@@ -2,6 +2,8 @@
 using FalconParking.Infrastructure.Abstractions.Commands;
 using System.Threading;
 using System.Threading.Tasks;
+using FalconParking.Infrastructure.Abstractions.Events;
+using System.Collections.Generic;
 
 namespace FalconParking.Infrastructure.Abstractions
 {
@@ -13,6 +15,14 @@ namespace FalconParking.Infrastructure.Abstractions
 
         Task<TResponse> SendAsync<TResponse>(
             IQuery<TResponse> request
+            ,CancellationToken cancellationToken = default);
+
+        Task PublishAsync(
+            IDomainEvent domainEvent
+            ,CancellationToken cancellationToken = default);
+
+        Task PublishRangeAsync(
+            IEnumerable<IDomainEvent> domainEvents
             ,CancellationToken cancellationToken = default);
     }
 }

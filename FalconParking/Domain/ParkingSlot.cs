@@ -1,6 +1,5 @@
 ﻿using FalconParking.Domain.Entities;
 using FalconParking.Domain.Events;
-using FalconParking.Domain.Events.Parking;
 using FalconParking.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -12,60 +11,68 @@ namespace FalconParking.Domain
     {
         #region Atributos
 
-        public int ParkingLotId { get; }
-        public int SlotNumber { get; } 
-        public ParkingSlotOccupant CurrentOccupant { get; private set; }
+        public Guid ParkingLotId { get; private set; }
+        public int SlotNumber { get; private set; }
         public ParkingSlotStatus Status { get; private set; }
+        public bool IsReservable { get; private set; }
+        public string OccupantLicensePlate { get; private set; }
         public bool isAvailable { get { return Status == ParkingSlotStatus.Available; } }
 
         #endregion
 
-        private ParkingSlot(
-            int aggregateId
-            ,int slotNumber
-            ,int parkingLotId
-            ,ParkingSlotStatus status) : base(aggregateId)
+        public ParkingSlot(
+            Guid aggregateId) : base(aggregateId)
         {
-            SlotNumber = slotNumber;
-            ParkingLotId = parkingLotId;
-            CurrentOccupant = null;
-            Status = status;
+            OccupantLicensePlate = null;
+            Status = ParkingSlotStatus.Available;
         }
 
         #region Metodos Publicos
 
         public static ParkingSlot New(
-            int aggregateId
-            ,int parkingLotId
-            ,int slotNumber)
+            Guid parkingLotId
+            ,int slotNumber
+            ,bool isReservable)
         {
-            return new ParkingSlot(
-                aggregateId
-                ,slotNumber
+            var slot = new ParkingSlot(Guid.NewGuid());
+
+            slot.RaiseEvent(new ParkingSlotAddedEvent(
+                slot.AggregateId
+                ,DomainHelpers.GetSystemUser()
                 ,parkingLotId
-                ,ParkingSlotStatus.Available);
+                ,slotNumber
+                ,isReservable));
+
+            return slot;
         }
 
         #endregion
 
-        public void Occupy(int userId, string carLicensePlate)
+        public void Occupy(
+            Guid currentUserId
+            ,string carLicensePlate)
         {
-            var newOccupant = new ParkingSlotOccupant(carLicensePlate);
-            CurrentOccupant = newOccupant;
+            OccupantLicensePlate = carLicensePlate;
             Status = ParkingSlotStatus.Occuppied;
 
             RaiseEvent(new ParkingSlotOccupiedEvent(
                 this.AggregateId
-                ,userId
-                ,CurrentOccupant));
+                ,currentUserId
+                ,OccupantLicensePlate));
         }
-
 
         #region Metodos Apply
 
+        public void Apply(ParkingSlotAddedEvent e)
+        {
+            ParkingLotId = e.ParkingLotId;
+            SlotNumber = e.SlotNumber;
+            IsReservable = e.IsReservable;
+        }
+
         public void Apply(ParkingSlotOccupiedEvent parkingEvent)
         {
-            CurrentOccupant = parkingEvent.Occupant;
+            OccupantLicensePlate = parkingEvent.OccupantLicensePlate;
             Status = ParkingSlotStatus.Occuppied;
         }
 

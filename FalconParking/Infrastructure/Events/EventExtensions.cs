@@ -15,8 +15,8 @@ namespace FalconParking.Infrastructure.Events
         public static ParkingLotEventModel ToParkingLotEvent(this IDomainEvent domainEvent)
         {
             return new ParkingLotEventModel(
-                new Guid()
-                ,domainEvent.AggregateId
+                Guid.NewGuid()
+                , domainEvent.AggregateId
                 ,domainEvent.GetType().Name
                 ,JsonConvert.SerializeObject(domainEvent)
                 ,domainEvent.TimeCreated);
@@ -25,7 +25,7 @@ namespace FalconParking.Infrastructure.Events
         public static ParkingSlotEventModel ToParkingSlotEvent(this IDomainEvent domainEvent)
         {
             return new ParkingSlotEventModel(
-                new Guid()
+                Guid.NewGuid()
                 ,domainEvent.AggregateId
                 ,domainEvent.GetType().Name
                 ,JsonConvert.SerializeObject(domainEvent)

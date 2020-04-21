@@ -1,41 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace FalconParking.Domain.Views
 {
     public class ParkingLotView
-	{
+    {
         #region Atributos
 
-        [Key]
-        public int AggregateId { get; private set; }
-        public string Code { get; private set; }
-        public int TotalSlotsCount { get; private set; }
-        public int AvailableSlotsCount { get; private set; }
-        public int Status { get; private set; }
-        public List<ParkingSlotView> Slots { get; private set; }
-        public DateTimeOffset UpdatedTime { get; private set; }
-        public string UpdatedBy { get; private set; }
+        public Guid AggregateId { get; set; }
+        public string Code { get; set; }
+        public int TotalSlotsCount { get; set; }
+        public int AvailableSlotsCount { get; set; }
+        public int Status { get; set; }
+        public ICollection<ParkingSlotView> Slots { get; set; }
+        public DateTimeOffset UpdatedTime { get; set; }
+        public Guid UpdatedBy { get; set; }
 
         #endregion
+        public ParkingLotView() { }
 
         public ParkingLotView(
-            int aggregateId
+            Guid aggregateId
             ,string code
             ,int totalSlotsCount
             ,int availableSlotsCount
             ,int status
+            ,ICollection<ParkingSlotView> slots
             ,DateTimeOffset updatedTime
-            ,string updatedBy)
+            ,Guid updatedBy)
         {
             AggregateId = aggregateId;
             Code = code;
             TotalSlotsCount = totalSlotsCount;
             AvailableSlotsCount = availableSlotsCount;
             Status = status;
-            Slots = new List<ParkingSlotView>();
+            Slots = slots;
             UpdatedTime = updatedTime;
             UpdatedBy = updatedBy;
         }

@@ -12,7 +12,7 @@ namespace FalconParking.Domain
     {
         #region Atributos
         public string Code { get; private set; }
-        public int TotalSlotsCount { get; }
+        public int TotalSlotsCount { get; private set; }
         public int AvailableSlotsCount { get; private set; }
         public ParkingLotStatus Status { get; private set; }
         public bool isOpen { get { return Status == ParkingLotStatus.Open; } }
@@ -21,16 +21,10 @@ namespace FalconParking.Domain
 
         #region Constructor
 
-        private ParkingLot(
-            int aggregateId
-            ,string code
-            ,int totalSlotsCount
-            ,ParkingLotStatus status) : base(aggregateId)
+        public ParkingLot(
+            Guid aggregateId) : base(aggregateId)
         {
-            Code = code;
-            TotalSlotsCount = totalSlotsCount;
-            AvailableSlotsCount = totalSlotsCount;
-            Status = status;
+            Status = ParkingLotStatus.Closed;
         }
 
         #endregion
@@ -38,22 +32,67 @@ namespace FalconParking.Domain
         #region Metodos publicos
 
         public static ParkingLot New(
-            int aggregateId
-            ,string code
-            ,int totalSlotsCount)
+            string code
+            ,int totalSlotsCount
+            ,int[] reservableSlots)
         {
+            if (code == "")
+                throw new ArgumentException($"No se puede crear un parqueo sin codigo!");
+
             if (totalSlotsCount < 1)
                 throw new ArgumentException($"No se puede crear un parqueo con menos de un campo!");
 
-            return new ParkingLot(
-                aggregateId
+            var parkingLot = new ParkingLot(Guid.NewGuid());
+
+            parkingLot.RaiseEvent(new ParkingLotAddedEvent(
+                parkingLot.AggregateId
+                ,DomainHelpers.GetSystemUser()
                 ,code
                 ,totalSlotsCount
-                ,ParkingLotStatus.Open);
+                ,reservableSlots));
+
+            return parkingLot;
+        }
+
+        public void Open(Guid currentUserId)
+        {
+            Status = ParkingLotStatus.Open;
+
+            RaiseEvent(new ParkingLotOpenedEvent(
+                AggregateId
+                ,currentUserId));
+        }
+
+        public void Close(Guid currentUserId)
+        {
+            Status = ParkingLotStatus.Closed;
+
+            RaiseEvent(new ParkingLotClosedEvent(
+                AggregateId
+                ,currentUserId));
         }
 
         #endregion
 
+        #region Metodos Apply
 
+        public void Apply(ParkingLotAddedEvent e)
+        {
+            Code = e.Code;
+            TotalSlotsCount = e.TotalSlotsCount;
+            AvailableSlotsCount = e.TotalSlotsCount;
+        }
+
+        public void Apply(ParkingLotOpenedEvent parkingEvent)
+        {
+            Status = ParkingLotStatus.Open;
+        }
+
+        public void Apply(ParkingLotClosedEvent parkingEvent)
+        {
+            Status = ParkingLotStatus.Closed;
+        }
+
+        #endregion
     }
 }

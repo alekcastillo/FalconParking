@@ -13,20 +13,29 @@ namespace FalconParking.Infrastructure
             DbContextOptions<FalconParkingDbContext> options) : base(options)
         {}
 
-        public DbSet<ParkingLotEventModel> ParkingLotEvents { get; }
-        public DbSet<ParkingLotView> ParkingLotViews { get; }
-        public DbSet<ParkingSlotEventModel> ParkingSlotEvents { get; }
-        public DbSet<ParkingSlotView> ParkingSlotViews { get; }
+        public DbSet<ParkingLotEventModel> ParkingLotEvents { get; set; }
+        public DbSet<ParkingLotView> ParkingLotViews { get; set; }
+        public DbSet<ParkingSlotEventModel> ParkingSlotEvents { get; set; }
+        public DbSet<ParkingSlotView> ParkingSlotViews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ParkingLotView>().ToTable("lot_view", "parking");
+            //Parking Lot View
             modelBuilder.Entity<ParkingLotView>()
-                .HasKey(c => c.AggregateId);
+                .ToTable("lot_view", "parking")
+                .HasKey(lv => lv.AggregateId);
+            //modelBuilder.Entity<ParkingLotView>()
+                //.HasMany(lv => lv.Slots)
+                //.WithOne(sv => sv.ParkingLot);
 
-            modelBuilder.Entity<ParkingSlotView>().ToTable("slot_view", "parking");
+            //Parking Slot View
             modelBuilder.Entity<ParkingSlotView>()
-                .HasKey(c => c.AggregateId);
+                .ToTable("slot_view", "parking")
+                .HasKey(s => s.AggregateId);
+            modelBuilder.Entity<ParkingSlotView>()
+                .HasOne(sv => sv.ParkingLot)
+                .WithMany(lv => lv.Slots)
+                .HasForeignKey(sv => sv.ParkingLotId);
         }
     }
 }

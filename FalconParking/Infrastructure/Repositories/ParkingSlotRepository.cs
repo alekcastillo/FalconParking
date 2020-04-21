@@ -5,40 +5,30 @@ using FalconParking.Domain.Abstractions.Repositories;
 using FalconParking.Domain.Factories;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using FalconParking.Infrastructure.Abstractions;
+using System.Collections.Generic;
+using System;
 
 namespace FalconParking.Infrastructure.Repositories
 {
     public class ParkingSlotRepository : IParkingSlotRepository
     {
-        private readonly FalconParkingDbContext context;
+        private readonly FalconParkingDbContext _context;
+        private readonly IMessageBus _messageBus;
 
         public ParkingSlotRepository(
-            FalconParkingDbContext dbContext)
+            FalconParkingDbContext context
+            ,IMessageBus messageBus)
         {
-            context = dbContext;
+            _context = context;
+            _messageBus = messageBus;
         }
 
-        public async Task SaveAsync(ParkingSlot aggregate)
+        public async Task<ParkingSlot> GetByIdAsync(Guid aggregateId)
         {
-            var events = aggregate.GetUncommittedDomainEvents();
-            if (events.Count < 1)
-                return;
-
-            var eventsToSave = events.Select(
-                    e => e.ToParkingSlotEvent()
-                ).ToArray();
-
-            context.ParkingSlotEvents.AddRange(eventsToSave);
-            await context.SaveChangesAsync();
-
-            aggregate.CommitDomainEvents();
-        }
-
-        public async Task<ParkingSlot> GetByIdAsync(int id)
-        {
-            var aggregate = ParkingSlotFactory.CreateParkingSlot(id);
-            var events = await context.ParkingSlotEvents.Where(
-                    e => e.AggregateId == id
+            var aggregate = AggregateFactory.CreateParkingSlot(aggregateId);
+            var events = await _context.ParkingSlotEvents.Where(
+                    e => e.AggregateId == aggregateId
                 ).OrderBy(
                     e => e.CreatedTime
                 ).ToListAsync();
@@ -47,6 +37,24 @@ namespace FalconParking.Infrastructure.Repositories
             aggregate.InitializeDomainEventHistory(eventsToApply);
 
             return aggregate;
+        }
+
+        public async Task SaveAsync(ParkingSlot aggregate)
+        {
+            var events = aggregate.GetUncommittedDomainEvents();
+            if (events.Count < 1)
+                return;
+
+            await _messageBus.PublishRangeAsync(events);
+
+            var eventsToSave = events.Select(
+                    e => e.ToParkingSlotEvent()
+                ).ToArray();
+
+            _context.ParkingSlotEvents.AddRange(eventsToSave);
+            await _context.SaveChangesAsync();
+
+            aggregate.CommitDomainEvents();
         }
     }
 }

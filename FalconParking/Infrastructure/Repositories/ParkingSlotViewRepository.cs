@@ -1,4 +1,5 @@
 ﻿using FalconParking.Domain.Abstractions.Repositories;
+using FalconParking.Domain.Entities;
 using FalconParking.Domain.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,17 +12,23 @@ namespace FalconParking.Infrastructure.Repositories
 {
     public class ParkingSlotViewRepository : IParkingSlotViewRepository
     {
-        private readonly FalconParkingDbContext context;
+        private readonly FalconParkingDbContext _context;
 
         public ParkingSlotViewRepository(
-            FalconParkingDbContext dbContext)
+            FalconParkingDbContext context)
         {
-            context = dbContext;
+            _context = context;
         }
 
-        public async Task<ParkingSlotView> GetByIdAsync(int aggregateId)
+        public async Task AddAsync(ParkingSlotView view)
         {
-            var view = await context.ParkingSlotViews.FirstOrDefaultAsync(
+            _context.Add(view);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ParkingSlotView> GetByIdAsync(Guid aggregateId)
+        {
+            var view = await _context.ParkingSlotViews.FirstOrDefaultAsync(
                 e => e.AggregateId == aggregateId
             );
 
@@ -30,16 +37,18 @@ namespace FalconParking.Infrastructure.Repositories
 
         public async Task SaveAsync(ParkingSlotView view)
         {
-            var existingView = await GetByIdAsync(view.AggregateId);
+            view.UpdatedTime = DateTimeOffset.UtcNow;
+            _context.Update(view);
+            await _context.SaveChangesAsync();
+        }
 
-            if (existingView != null) {
-                existingView.Status = view.Status;
-                existingView.UpdatedBy = view.UpdatedBy;
-                existingView.UpdatedTime = view.UpdatedTime;
-            } else
-                context.Add(view);
+        public async Task<List<ParkingSlotView>> GetAllReservedAsync()
+        {
+            var views = await _context.ParkingSlotViews.Where(
+                e => e.Status == (int) ParkingSlotStatus.Reserved
+            ).ToListAsync();
 
-            await context.SaveChangesAsync();
+            return views;
         }
 
         //public async Task DeleteByIdAsync(int id, int userId)
