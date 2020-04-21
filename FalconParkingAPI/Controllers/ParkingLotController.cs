@@ -50,7 +50,7 @@ namespace FalconParkingAPI.Controllers
         }
 
         [HttpPost("open")]
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<string> OpenParkingLot([FromBody] OpenParkingLotRequest request)
@@ -60,8 +60,19 @@ namespace FalconParkingAPI.Controllers
             return response.ToString();
         }
 
+        [HttpPost("close")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<string> CloseParkingLot([FromBody] CloseParkingLotRequest request)
+        {
+            var command = _mapper.Map<CloseParkingLotCommand>(request);
+            var response = await _messageBus.SendAsync(command);
+            return response.ToString();
+        }
+
         [HttpPut]
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(Guid), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<string> AddParkingLot([FromBody] AddParkingLotRequest request)
