@@ -27,40 +27,55 @@ namespace FalconParkingClient
         /// <summary>
         /// Revisa si el campo del parqueo esta disponible o no,
         /// y luego muestra la opcion correspondiente para el admin
-        /// (Sease ocupar o desocupar)
+        /// (Sease ocupar o desocupar), o para el cliente, que seria
+        /// reservar
         /// </summary>
         private async void SlotClickHandlerAsync(object sender, SelectionChangedEventArgs e)
         {
-            if (!UserRoles.IsAdmin)
-                return;
+            var item = (ParkingSlotView)e.AddedItems[0];
+            MessageBoxResult option;
 
-            ParkingSlotView item = (ParkingSlotView) e.AddedItems[0];
-
-            var verb = item.IsAvailable ? "ocupar" : "desocupar";
-            var option = MessageBox.Show(
-                    $"Desea {verb} el campo {item.SlotNumber}?"
-                    ,"Confirmacion"
-                    ,MessageBoxButton.YesNo
-                    ,MessageBoxImage.Exclamation);
-
-            if (option == MessageBoxResult.Yes)
+            if (UserRoles.IsAdmin)
             {
-                if (item.IsAvailable)
-                {
-                    new OccupySlotWindow(item.AggregateId).Show();
-                }
-                else
-                {
-                    var result = await FalconParkingAPI.FreeParkingSlot(
-                        item.AggregateId
-                        ,"");
+                var verb = item.IsAvailable ? "ocupar" : "desocupar";
+                option = MessageBox.Show(
+                        $"Desea {verb} el campo {item.SlotNumber}?"
+                        , "Confirmacion"
+                        , MessageBoxButton.YesNo
+                        , MessageBoxImage.Exclamation);
 
-                    if (result)
-                        MessageBox.Show(
-                        $"El campo {item.SlotNumber} ha sido desocupado!"
-                        ,"Exito"
-                        ,MessageBoxButton.OK
-                        ,MessageBoxImage.Information);
+                if (option == MessageBoxResult.Yes)
+                {
+                    if (item.IsAvailable)
+                    {
+                        new OccupySlotWindow(item.AggregateId).Show();
+                    }
+                    else
+                    {
+                        var result = await FalconParkingAPI.FreeParkingSlot(
+                            item.AggregateId
+                            , "");
+
+                        if (result)
+                            MessageBox.Show(
+                                $"El campo {item.SlotNumber} ha sido desocupado!"
+                                , "Exito"
+                                , MessageBoxButton.OK
+                                , MessageBoxImage.Information);
+                    }
+                }
+            } else
+            {
+                if (item.IsAvailable && item.IsReservable)
+                {
+                    option = MessageBox.Show(
+                            $"Desea reservar el campo {item.SlotNumber}?"
+                            , "Confirmacion"
+                            , MessageBoxButton.YesNo
+                            , MessageBoxImage.Exclamation);
+
+                    if (option == MessageBoxResult.Yes)
+                        new ReserveSlotWindow(item.AggregateId).Show();
                 }
             }
         }

@@ -13,13 +13,13 @@ using System.Windows.Shapes;
 namespace FalconParkingClient
 {
     /// <summary>
-    /// Interaction logic for OccupySlotWindow.xaml
+    /// Interaction logic for ReserveSlotWindow.xaml
     /// </summary>
-    public partial class OccupySlotWindow : Window
+    public partial class ReserveSlotWindow : Window
     {
         private Guid ParkingSlotId { get; set; }
 
-        public OccupySlotWindow(Guid parkingSlotId)
+        public ReserveSlotWindow(Guid parkingSlotId)
         {
             InitializeComponent();
             ParkingSlotId = parkingSlotId;
@@ -27,36 +27,24 @@ namespace FalconParkingClient
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (txtLicensePlate.Text.Length < 1)
+            if (cboxTime.SelectedIndex < 0)
             {
                 MessageBox.Show(
-                    "Ingrese un numero de placa valido!"
-                    , "Ocupar espacio fallido"
-                    , MessageBoxButton.OK
-                    , MessageBoxImage.Error);
-
-                return;
-            }
-
-            if (txtUserIdentification.Text.Length < 1)
-            {
-                MessageBox.Show(
-                    "Ingrese un numero de cedula valido!"
-                    ,"Ocupar espacio fallido"
+                    "Seleccione un tiempo de reservacion!"
+                    ,"Reservar espacio fallido"
                     ,MessageBoxButton.OK
                     ,MessageBoxImage.Error);
 
                 return;
             }
 
-            var result = await FalconParkingAPI.OccupyParkingSlot(
+            var result = await FalconParkingAPI.ReserveParkingSlot(
                 ParkingSlotId
-                ,txtLicensePlate.Text
-                ,txtUserIdentification.Text);
+                ,cboxTime.SelectedIndex);
 
             if (result)
                 MessageBox.Show(
-                    "El campo ha sido ocupado con exito!"
+                    "El campo ha sido reservado con exito!"
                     , "Exito"
                     , MessageBoxButton.OK
                     , MessageBoxImage.Information);
@@ -68,7 +56,6 @@ namespace FalconParkingClient
                     ,MessageBoxImage.Error);
 
             this.Close();
-
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FalconParkingClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="515">
+        Title="Falcon Parking" Height="450" Width="515">
     <Grid Margin="0,88,0,0">
         <TabControl x:Name="tabctlLots" Margin="0,-20,0,0"/>
         <Label x:Name="lblTitle" Content="Informacion de parqueos" HorizontalAlignment="Left" Margin="17,-72,0,0" VerticalAlignment="Top" FontSize="18"/>

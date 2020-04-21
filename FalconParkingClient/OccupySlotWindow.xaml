@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FalconParkingClient"
         mc:Ignorable="d"
-        Title="OccupySlotWindow" Height="239" Width="293">
+        Title="Ocupar campo" Height="239" Width="293">
     <Grid>
         <Label x:Name="lblLicensePlate" Content="Numero de placa" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtLicensePlate" HorizontalAlignment="Center" Margin="0,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>

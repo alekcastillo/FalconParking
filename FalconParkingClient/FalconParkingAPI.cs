@@ -88,8 +88,8 @@ namespace FalconParkingClient
             {
                 var request = new FreeParkingSlotRequest(
                     parkingSlotId
-                    , UserRoles.CurrentUserId
-                    , licensePlate);
+                    ,UserRoles.CurrentUserId
+                    ,licensePlate);
                 var json = JsonConvert.SerializeObject(request, Formatting.Indented);
                 var httpContent = new StringContent(json);
                 httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -101,6 +101,33 @@ namespace FalconParkingClient
 
                 return true;
             } catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public static async Task<bool> ReserveParkingSlot(
+            Guid parkingSlotId
+            ,int reservationTime)
+        {
+            try
+            {
+                var request = new ReserveParkingSlotRequest(
+                    parkingSlotId
+                    ,UserRoles.CurrentUserId
+                    ,reservationTime);
+                var json = JsonConvert.SerializeObject(request, Formatting.Indented);
+                var httpContent = new StringContent(json);
+                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                HttpResponseMessage response = await client.PostAsync(
+                    $"{Path}/parkingSlots/reserve"
+                    , httpContent);
+                response.EnsureSuccessStatusCode();
+
+                return true;
+            }
+            catch (Exception ex)
             {
                 return false;
             }

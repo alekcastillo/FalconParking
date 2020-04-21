@@ -23,3 +23,5 @@ E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkin
 E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkingAPI\FalconParkingClient\obj\Debug\netcoreapp3.1\FalconParkingClient.csproj.CopyComplete
 E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkingAPI\FalconParkingClient\obj\Debug\netcoreapp3.1\OccupySlotWindow.g.cs
 E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkingAPI\FalconParkingClient\obj\Debug\netcoreapp3.1\OccupySlotWindow.baml
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkingAPI\FalconParkingClient\obj\Debug\netcoreapp3.1\ReserveSlotWindow.g.cs
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParkingAPI\FalconParkingClient\obj\Debug\netcoreapp3.1\ReserveSlotWindow.baml

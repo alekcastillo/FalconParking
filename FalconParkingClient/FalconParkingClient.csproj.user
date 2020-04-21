@@ -13,6 +13,9 @@
     <Compile Update="OccupySlotWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ReserveSlotWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="LoginWindow.xaml">
@@ -22,6 +25,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OccupySlotWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ReserveSlotWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
