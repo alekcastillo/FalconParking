@@ -1,21 +1,10 @@
-﻿using FalconParkingClient.Views;
-using System;
+﻿using FalconParkingClient.Models;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FalconParkingClient
 {
@@ -35,13 +24,63 @@ namespace FalconParkingClient
             DataUpdater.Start();
         }
 
+        /// <summary>
+        /// Revisa si el campo del parqueo esta disponible o no,
+        /// y luego muestra la opcion correspondiente para el admin
+        /// (Sease ocupar o desocupar)
+        /// </summary>
+        private async void SlotClickHandlerAsync(object sender, SelectionChangedEventArgs e)
+        {
+            if (!UserRoles.IsAdmin)
+                return;
+
+            ParkingSlotView item = (ParkingSlotView) e.AddedItems[0];
+
+            var verb = item.IsAvailable ? "ocupar" : "desocupar";
+            var option = MessageBox.Show(
+                    $"Desea {verb} el campo {item.SlotNumber}?"
+                    ,"Confirmacion"
+                    ,MessageBoxButton.YesNo
+                    ,MessageBoxImage.Exclamation);
+
+            if (option == MessageBoxResult.Yes)
+            {
+                if (item.IsAvailable)
+                {
+                    new OccupySlotWindow(item.AggregateId).Show();
+                }
+                else
+                {
+                    var result = await FalconParkingAPI.FreeParkingSlot(
+                        item.AggregateId
+                        ,"");
+
+                    if (result)
+                        MessageBox.Show(
+                        $"El campo {item.SlotNumber} ha sido desocupado!"
+                        ,"Exito"
+                        ,MessageBoxButton.OK
+                        ,MessageBoxImage.Information);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Limpia las tabs del tabcontrol para repopularlas
+        /// con la nueva data del servidor
+        /// </summary>
         private void DeleteTabs()
         {
             tabctlLots.Items.Clear();
         }
 
+        /// <summary>
+        /// Crear tabs para cada parqueo, y dentro de cada una
+        /// una listview con una grid para mostrar los espacios
+        /// </summary>
         private void UpdateUI()
         {
+            var currentTab = tabctlLots.SelectedIndex;
             DeleteTabs();
             foreach (var parkingLot in ParkingLots)
             {
@@ -51,39 +90,41 @@ namespace FalconParkingClient
                 var listView = new ListView();
                 var gridView = new GridView();
                 listView.View = gridView;
+                listView.SelectionChanged += SlotClickHandlerAsync;
                 gridView.Columns.Add(new GridViewColumn
                 {
-                    Header = "Numero",
+                    Header = "Numero de campo",
                     DisplayMemberBinding = new Binding("SlotNumber")
                 });
                 gridView.Columns.Add(new GridViewColumn
                 {
                     Header = "Estado",
-                    DisplayMemberBinding = new Binding("Status")
+                    DisplayMemberBinding = new Binding("StatusText")
                 });
                 gridView.Columns.Add(new GridViewColumn
                 {
                     Header = "Es reservable",
-                    DisplayMemberBinding = new Binding("isReservable"),
-                    Width = 50.0
+                    DisplayMemberBinding = new Binding("IsReservableText")
                 });
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Ocupante actual",
+                    DisplayMemberBinding = new Binding("CurrentOccupantLicensePlate")
+                });
+                parkingLot.Slots = parkingLot.Slots.OrderBy(sv => sv.SlotNumber).ToList();
                 listView.ItemsSource = parkingLot.Slots;
                 tab.Content = listView;
             }
-
-            tabctlLots.SelectedIndex = 0;
+            tabctlLots.SelectedIndex = currentTab;
         }
 
+        /// <summary>
+        /// Actualiza la ventana con la nueva data del servidor
+        /// </summary>
         public void UpdateData(IEnumerable<ParkingLotView> parkingLots)
         {
             ParkingLots = parkingLots;
             UpdateUI();
-        }
-
-        private async void BtnConnect_Click(object sender, RoutedEventArgs e)
-        {
-            //ParkingLots = await FalconParkingAPI.GetParkingLots();
-            //UpdateUI();
         }
     }
 }

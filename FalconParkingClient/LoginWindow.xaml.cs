@@ -22,6 +22,10 @@ namespace FalconParkingClient
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Valida los datos del formulario y abre un socket TCP
+        /// para validar el login con el backend
+        /// </summary>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (txtEmail.Text.Length < 1)

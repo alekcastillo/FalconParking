@@ -16,6 +16,7 @@ namespace FalconParkingAPI.Mappings
             //Slot Requests
             CreateMap<OccupyParkingSlotRequest, OccupyParkingSlotCommand>();
             CreateMap<FreeParkingSlotRequest, FreeParkingSlotCommand>();
+            CreateMap<ReserveParkingSlotRequest, ReserveParkingSlotCommand>();
         }
     }
 }

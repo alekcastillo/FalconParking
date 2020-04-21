@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FalconParkingClient.Attributes;
+using System;
 
-namespace FalconParkingClient.Views
+namespace FalconParkingClient.Models
 {
     public class ParkingSlotView
     {
@@ -15,6 +16,9 @@ namespace FalconParkingClient.Views
         public string CurrentOccupantLicensePlate { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
         public Guid UpdatedBy { get; set; }
+        public bool IsAvailable { get { return Status == (int)ParkingSlotStatus.Disponible; } }
+        public string IsReservableText { get { return IsReservable ? "Si" : "No"; } }
+        public string StatusText { get { return ((ParkingSlotStatus)Status).ToString(); } }
 
         #endregion
         public ParkingSlotView() { }

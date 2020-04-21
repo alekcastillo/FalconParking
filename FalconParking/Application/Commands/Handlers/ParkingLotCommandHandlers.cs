@@ -34,23 +34,21 @@ namespace FalconParking.Application.Commands.Handlers
             _messageBus = messageBus;
         }
 
-        public async Task<Guid> Handle(
-            AddParkingLotCommand command
-            ,CancellationToken cancellationToken = default)
+        public async Task<Guid> Handle(AddParkingLotCommand cmd, CancellationToken cancellationToken = default)
         {
             var ReservableSlots = new int[] { 1, 2, 3, 5, 6 };
             var parkingLot = ParkingLot.New(
-                command.Code
-                ,command.TotalSlotsCount
+                cmd.Code
+                ,cmd.TotalSlotsCount
                 ,ReservableSlots);
 
             await _lotRepository.SaveAsync(parkingLot);
 
             // Guardamos los ids de los slots para luego
             // pasarlos al ParkingLotAndSlotsAddedEvent
-            var slotIds = new Guid[command.TotalSlotsCount];
+            var slotIds = new Guid[cmd.TotalSlotsCount];
 
-            for (int slotNumber = 1; slotNumber <= command.TotalSlotsCount; slotNumber++) {
+            for (int slotNumber = 1; slotNumber <= cmd.TotalSlotsCount; slotNumber++) {
                 var parkingSlot = ParkingSlot.New(
                     parkingLot.AggregateId
                     ,slotNumber
@@ -69,32 +67,28 @@ namespace FalconParking.Application.Commands.Handlers
             return parkingLot.AggregateId;
         }
 
-        public async Task<bool> Handle(
-            OpenParkingLotCommand command
-            ,CancellationToken cancellationToken = default)
+        public async Task<bool> Handle(OpenParkingLotCommand cmd, CancellationToken cancellationToken = default)
         {
-            var parkingLot = await _lotRepository.GetByIdAsync(command.ParkingLotId);
+            var parkingLot = await _lotRepository.GetByIdAsync(cmd.ParkingLotId);
 
             if (parkingLot.isOpen)
                 throw new DomainException($"El parqueo {parkingLot.Code} ya esta abierto");
 
-            parkingLot.Open(command.CurrentUserId);
+            parkingLot.Open(cmd.CurrentUserId);
 
             await _lotRepository.SaveAsync(parkingLot);
 
             return true;
         }
 
-        public async Task<bool> Handle(
-            CloseParkingLotCommand command
-            ,CancellationToken cancellationToken = default)
+        public async Task<bool> Handle(CloseParkingLotCommand cmd, CancellationToken cancellationToken = default)
         {
-            var parkingLot = await _lotRepository.GetByIdAsync(command.ParkingLotId);
+            var parkingLot = await _lotRepository.GetByIdAsync(cmd.ParkingLotId);
 
             if (!parkingLot.isOpen)
                 throw new DomainException($"El parqueo {parkingLot.Code} ya esta cerrado");
 
-            parkingLot.Close(command.CurrentUserId);
+            parkingLot.Close(cmd.CurrentUserId);
 
             await _lotRepository.SaveAsync(parkingLot);
 

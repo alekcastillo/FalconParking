@@ -33,25 +33,36 @@ namespace FalconParkingAPI.Controllers
         }
 
         [HttpPost("occupy")]
-        [ProducesResponseType(typeof(bool), 200)]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<IActionResult> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
         {
             var command = _mapper.Map<OccupyParkingSlotCommand>(request);
-            var response = await _messageBus.SendAsync(command);
-            return response.ToString();
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
         }
 
         [HttpPost("free")]
-        [ProducesResponseType(typeof(bool), 200)]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> FreeParkingSlot([FromBody] FreeParkingSlotRequest request)
+        public async Task<IActionResult> FreeParkingSlot([FromBody] FreeParkingSlotRequest request)
         {
             var command = _mapper.Map<FreeParkingSlotCommand>(request);
-            var response = await _messageBus.SendAsync(command);
-            return response.ToString();
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
+        }
+
+        [HttpPost("reserve")]
+        [Produces("application/json")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> ReserveParkingSlot([FromBody] ReserveParkingSlotRequest request)
+        {
+            var command = _mapper.Map<ReserveParkingSlotCommand>(request);
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
         }
     }
 }

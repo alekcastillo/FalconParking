@@ -36,7 +36,7 @@ namespace FalconParking.Application.Events.Handlers
                 ,e.Code
                 ,e.TotalSlotsCount
                 ,e.TotalSlotsCount
-                ,(int)ParkingLotStatus.Closed
+                ,(int)ParkingLotStatus.Open
                 ,new List<ParkingSlotView>()
                 ,e.TimeCreated
                 ,e.CurrentUserId);

@@ -16,7 +16,7 @@ namespace FalconParking.Domain
         public ParkingSlotStatus Status { get; private set; }
         public bool IsReservable { get; private set; }
         public string OccupantLicensePlate { get; private set; }
-        public bool isAvailable { get { return Status == ParkingSlotStatus.Available; } }
+        public bool IsAvailable { get { return Status == ParkingSlotStatus.Available; } }
 
         #endregion
 
@@ -71,6 +71,18 @@ namespace FalconParking.Domain
                 ,currentUserId));
         }
 
+        public void Reserve(
+            Guid currentUserId
+            ,int reservationTime)
+        {
+            Status = ParkingSlotStatus.Reserved;
+
+            RaiseEvent(new ParkingSlotReservedEvent(
+                this.AggregateId
+                ,currentUserId
+                ,reservationTime));
+        }
+
         #endregion
 
         #region Metodos Apply
@@ -92,6 +104,11 @@ namespace FalconParking.Domain
         {
             OccupantLicensePlate = null;
             Status = ParkingSlotStatus.Available;
+        }
+
+        public void Apply(ParkingSlotReservedEvent e)
+        {
+            Status = ParkingSlotStatus.Reserved;
         }
 
         #endregion

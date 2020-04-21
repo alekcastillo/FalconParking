@@ -11,6 +11,12 @@ namespace FalconParkingClient
         private const int portNum = 13;
         private const string hostName = "localhost";
 
+        /// <summary>
+        /// Se conecta con el socket TCP del servidor, envia 
+        /// los credenciales pasados por el form y devuelve
+        /// el GUID del usuario si el login fue exitoso,
+        /// o un GUID vacio de no serlo
+        /// </summary>
         public static Guid TryLogin(string email, string password)
         {
             Guid result = Guid.Empty;

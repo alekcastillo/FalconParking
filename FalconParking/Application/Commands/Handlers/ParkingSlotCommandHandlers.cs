@@ -12,6 +12,7 @@ namespace FalconParking.Application.Commands.Handlers
     public class ParkingSlotCommandHandlers :
         ICommandHandler<OccupyParkingSlotCommand, bool>
         ,ICommandHandler<FreeParkingSlotCommand, bool>
+        ,ICommandHandler<ReserveParkingSlotCommand, bool>
     {
         private readonly IParkingLotRepository _lotRepository;
         private readonly IParkingSlotRepository _slotRepository;
@@ -25,23 +26,23 @@ namespace FalconParking.Application.Commands.Handlers
         }
 
         public async Task<bool> Handle(
-            OccupyParkingSlotCommand command
+            OccupyParkingSlotCommand cmd
             ,CancellationToken token = new CancellationToken())
         {
-            var parkingSlot = await _slotRepository.GetByIdAsync(command.ParkingSlotId);
+            var parkingSlot = await _slotRepository.GetByIdAsync(cmd.ParkingSlotId);
             var parkingLot = await _lotRepository.GetByIdAsync(parkingSlot.ParkingLotId);
 
             if (!parkingLot.isOpen)
-                throw new DomainException($"El parqueo {parkingLot.Code} no esta abierto");
+                throw new DomainException($"El parqueo {parkingLot.Code} esta cerrado");
 
-            if (!parkingSlot.isAvailable)
+            if (!parkingSlot.IsAvailable)
                 throw new DomainException($"El espacio {parkingSlot.SlotNumber} del parqueo {parkingLot.Code} no esta disponible");
 
             //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
 
             parkingSlot.Occupy(
-                command.CurrentUserId
-                ,command.CarLicensePlate);
+                cmd.CurrentUserId
+                ,cmd.CarLicensePlate);
 
             await _slotRepository.SaveAsync(parkingSlot);
 
@@ -49,23 +50,50 @@ namespace FalconParking.Application.Commands.Handlers
         }
 
         public async Task<bool> Handle(
-            FreeParkingSlotCommand command
+            FreeParkingSlotCommand cmd
             ,CancellationToken token = new CancellationToken())
         {
-            var parkingSlot = await _slotRepository.GetByIdAsync(command.ParkingSlotId);
+            var parkingSlot = await _slotRepository.GetByIdAsync(cmd.ParkingSlotId);
             var parkingLot = await _lotRepository.GetByIdAsync(parkingSlot.ParkingLotId);
 
             if (!parkingLot.isOpen)
-                throw new DomainException($"El parqueo {parkingLot.Code} no esta abierto");
+                throw new DomainException($"El parqueo {parkingLot.Code} esta cerrado");
 
-            if (parkingSlot.isAvailable)
+            if (parkingSlot.IsAvailable)
                 throw new DomainException($"El espacio {parkingSlot.SlotNumber} del parqueo {parkingLot.Code} ya esta disponible");
 
             //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
 
             parkingSlot.Free(
-                command.CurrentUserId
-                ,command.CarLicensePlate);
+                cmd.CurrentUserId
+                ,cmd.CarLicensePlate);
+
+            await _slotRepository.SaveAsync(parkingSlot);
+
+            return true;
+        }
+
+        public async Task<bool> Handle(
+            ReserveParkingSlotCommand cmd
+            ,CancellationToken token = new CancellationToken())
+        {
+            var parkingSlot = await _slotRepository.GetByIdAsync(cmd.ParkingSlotId);
+            var parkingLot = await _lotRepository.GetByIdAsync(parkingSlot.ParkingLotId);
+
+            if (!parkingLot.isOpen)
+                throw new DomainException($"El parqueo {parkingLot.Code} esta cerrado");
+
+            if (!parkingSlot.IsReservable)
+                throw new DomainException($"El espacio {parkingSlot.SlotNumber} del parqueo {parkingLot.Code} no es reservable");
+
+            if (!parkingSlot.IsAvailable)
+                throw new DomainException($"El espacio {parkingSlot.SlotNumber} del parqueo {parkingLot.Code} no esta disponible");
+
+            //TODO: Check if command.CarLicensePlate is registered to command.UserIdentification
+
+            parkingSlot.Reserve(
+                cmd.CurrentUserId
+                ,cmd.ReservationTime);
 
             await _slotRepository.SaveAsync(parkingSlot);
 

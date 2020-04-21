@@ -11,6 +11,7 @@ namespace FalconParking.Application.Events.Handlers
     public class ParkingSlotEventHandlers :
         IEventHandler<ParkingSlotOccupiedEvent>
         ,IEventHandler<ParkingSlotFreedEvent>
+        ,IEventHandler<ParkingSlotReservedEvent>
     {
         private readonly IParkingSlotViewRepository _slotsRepository;
 
@@ -36,6 +37,15 @@ namespace FalconParking.Application.Events.Handlers
 
             slotView.CurrentOccupantLicensePlate = null;
             slotView.Status = (int)ParkingSlotStatus.Available;
+
+            await _slotsRepository.SaveAsync(slotView);
+        }
+
+        public async Task Handle(ParkingSlotReservedEvent e, CancellationToken cancellationToken)
+        {
+            var slotView = await _slotsRepository.GetByIdAsync(e.AggregateId);
+
+            slotView.Status = (int)ParkingSlotStatus.Reserved;
 
             await _slotsRepository.SaveAsync(slotView);
         }

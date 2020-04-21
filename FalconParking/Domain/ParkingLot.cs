@@ -24,7 +24,7 @@ namespace FalconParking.Domain
         public ParkingLot(
             Guid aggregateId) : base(aggregateId)
         {
-            Status = ParkingLotStatus.Closed;
+            Status = ParkingLotStatus.Open;
         }
 
         #endregion

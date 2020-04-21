@@ -5,14 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FalconParkingClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="650">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="86*"/>
-            <ColumnDefinition Width="239*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="BtnConnect" Content="Connect" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" Height="36" Width="127" Click="BtnConnect_Click"/>
-        <TabControl x:Name="tabctlLots" Grid.Column="1">
-        </TabControl>
+        Title="MainWindow" Height="450" Width="515">
+    <Grid Margin="0,88,0,0">
+        <TabControl x:Name="tabctlLots" Margin="0,-20,0,0"/>
+        <Label x:Name="lblTitle" Content="Informacion de parqueos" HorizontalAlignment="Left" Margin="17,-72,0,0" VerticalAlignment="Top" FontSize="18"/>
     </Grid>
 </Window>

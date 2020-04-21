@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FalconParkingClient.Views
+namespace FalconParkingClient.Models
 {
     public class ParkingLotView
     {
