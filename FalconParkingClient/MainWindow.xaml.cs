@@ -59,9 +59,9 @@ namespace FalconParkingClient
                         if (result)
                             MessageBox.Show(
                                 $"El campo {item.SlotNumber} ha sido desocupado!"
-                                , "Exito"
-                                , MessageBoxButton.OK
-                                , MessageBoxImage.Information);
+                                ,"Exito"
+                                ,MessageBoxButton.OK
+                                ,MessageBoxImage.Information);
                     }
                 }
             } else
@@ -70,9 +70,9 @@ namespace FalconParkingClient
                 {
                     option = MessageBox.Show(
                             $"Desea reservar el campo {item.SlotNumber}?"
-                            , "Confirmacion"
-                            , MessageBoxButton.YesNo
-                            , MessageBoxImage.Exclamation);
+                            ,"Confirmacion"
+                            ,MessageBoxButton.YesNo
+                            ,MessageBoxImage.Exclamation);
 
                     if (option == MessageBoxResult.Yes)
                         new ReserveSlotWindow(item.AggregateId).Show();
@@ -96,7 +96,9 @@ namespace FalconParkingClient
         private void UpdateUI()
         {
             var currentTab = tabctlLots.SelectedIndex;
+
             DeleteTabs();
+
             foreach (var parkingLot in ParkingLots)
             {
                 var tab = new TabItem();
@@ -130,6 +132,7 @@ namespace FalconParkingClient
                 listView.ItemsSource = parkingLot.Slots;
                 tab.Content = listView;
             }
+
             tabctlLots.SelectedIndex = currentTab;
         }
 
