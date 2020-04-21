@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FalconParkingClient"
         mc:Ignorable="d"
-        Title="Falcon Parking - Ingreso" Height="251" Width="240">
+        Title="Falcon Parking - Ingreso" Height="274" Width="408">
     <Grid>
-        <Label x:Name="lblEmail" Content="Correo electronico" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblEmail" Content="Correo electronico" HorizontalAlignment="Left" Margin="94,64,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtEmail" HorizontalAlignment="Center" Margin="0,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-        <Label x:Name="lblPassword" Content="Clave" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassword" Content="Clave" HorizontalAlignment="Left" Margin="94,125,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtPassword" HorizontalAlignment="Center" Margin="0,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
         <Button x:Name="btnLogin" Content="Ingresar" Margin="0,0,10,9" HorizontalAlignment="Right" Width="43" Height="19" VerticalAlignment="Bottom" Click="btnLogin_Click"/>
-        <Label x:Name="lblTitle" Content="FALCON PARKING" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18" Background="{x:Null}" Foreground="#FF614FC2"/>
+        <Label x:Name="lblTitle" Content="FALCON PARKING" HorizontalAlignment="Left" Margin="112,10,0,0" VerticalAlignment="Top" FontSize="18" Background="{x:Null}" Foreground="#FF614FC2"/>
 
     </Grid>
 </Window>

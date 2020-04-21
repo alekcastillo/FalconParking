@@ -3,7 +3,7 @@ using System;
 
 namespace FalconParking.Domain.Events
 {
-    public class DomainEvent : IDomainEvent
+    public abstract class DomainEvent : IDomainEvent
     {
         public Guid AggregateId { get; }
         public DateTimeOffset TimeCreated { get; }

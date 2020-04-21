@@ -147,7 +147,7 @@ namespace FalconParkingClient
                         new UpdateLotsCallback(window.UpdateData),
                         await GetParkingLots()
                     );
-                    Thread.Sleep(20000);
+                    Thread.Sleep(1500);
                 }
             }
             catch (Exception ex)
