@@ -22,6 +22,8 @@ namespace FalconParkingClient
             InitializeComponent();
             DataUpdater = new Thread(() => FalconParkingAPI.ParkingLotDataUpdater(this));
             DataUpdater.Start();
+            var nombre = UserRoles.IsAdmin ? "Admin" : "Usuario";
+            lblTitle.Content += $" (loggeado como {nombre})";
         }
 
         /// <summary>
