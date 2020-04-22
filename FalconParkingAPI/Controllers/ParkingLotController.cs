@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FalconParking.Infrastructure.Commands;
+using FalconParking.Application.Commands;
+using FalconParking.Application.Queries;
+using FalconParking.Domain.Views;
+using FalconParking.Infrastructure.Abstractions;
 using FalconParkingAPI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,62 +21,65 @@ namespace FalconParkingAPI.Controllers
     public class ParkingLotController : Controller
     {
         private readonly ILogger<ParkingLotController> _logger;
-        //private readonly IParkingEventRepository _eventsRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _messageBus;
 
         public ParkingLotController(
-            ILogger<ParkingLotController> logger,
-            //IParkingEventRepository eventsRepository,
-            IMapper mapper,
-            IMediator mediator)
+            ILogger<ParkingLotController> logger
+            ,IMapper mapper
+            ,IMessageBus messageBus)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_eventsRepository = eventsRepository;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ParkingLotView>), 200)]
         [ProducesResponseType(400)]
-        public async Task<string> GetParkingLotView(int id)
+        [ProducesResponseType(404)]
+        public async Task<string> GetParkingLotsInfo()
         {
-            //var command = _mapper.Map<OccupyParkingSlotCommand>();
-            //var response = await _mediator.Send(command);
-            return ""; //response.ToString();
+            var query = new GetParkingLotsInfoQuery();
+            var response = await _messageBus.SendAsync(query);
+            //For some reason, the global startup setting for the json loop handling is not working
+            return JsonConvert.SerializeObject(response, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         [HttpPost("open")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> OpenParkingLot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<IActionResult> OpenParkingLot([FromBody] OpenParkingLotRequest request)
         {
-            var command = _mapper.Map<OccupyParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
+            var command = _mapper.Map<OpenParkingLotCommand>(request);
+            var response = await _messageBus.SendAsync(command);
+            return Ok(response.ToString());
         }
 
         [HttpPost("close")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> CloseParkingLot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<IActionResult> CloseParkingLot([FromBody] CloseParkingLotRequest request)
         {
-            var command = _mapper.Map<OccupyParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
+            var command = _mapper.Map<CloseParkingLotCommand>(request);
+            var response = await _messageBus.SendAsync(command);
+            return Ok(response.ToString());
         }
 
-        //// GET: api/<controller>
-        //[HttpGet("{lotId}")]
-        //public async Task<IActionResult> GetParkingLotInformation()
-        //{
-        //    var query = new GetLotInformationQuery();
-        //    var result = await _mediator.Send(query);
-        //    return Ok(result);
-        //}
-
+        [HttpPut]
+        [Produces("application/json")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddParkingLot([FromBody] AddParkingLotRequest request)
+        {
+            var command = _mapper.Map<AddParkingLotCommand>(request);
+            var response = await _messageBus.SendAsync(command);
+            return Ok(response.ToString());
+        }
     }
 }

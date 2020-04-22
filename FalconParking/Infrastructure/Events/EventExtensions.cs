@@ -1,4 +1,5 @@
 ﻿using FalconParking.Domain.Events;
+using FalconParking.Infrastructure.Abstractions.Events;
 using FalconParking.Infrastructure.Models;
 using Newtonsoft.Json;
 using System;
@@ -7,22 +8,44 @@ using System.Text;
 
 namespace FalconParking.Infrastructure.Events
 {
+    //This whole class must change as well
+
     public static class EventExtensions
     {
-        public static EventModel ToEventModel(this DomainEvent domainEvent)
+        public static ParkingLotEventModel ToParkingLotEvent(this IDomainEvent domainEvent)
         {
-            return new EventModel(
-                new Guid(),
-                domainEvent.AggregateId,
-                domainEvent.GetType().Name,
-                "{}"
-                );
+            return new ParkingLotEventModel(
+                Guid.NewGuid()
+                , domainEvent.AggregateId
+                ,domainEvent.GetType().Name
+                ,JsonConvert.SerializeObject(domainEvent)
+                ,domainEvent.TimeCreated);
         }
 
-        public static object DeserializeEvent(this EventModel eventModel)
+        public static ParkingSlotEventModel ToParkingSlotEvent(this IDomainEvent domainEvent)
         {
-            var eventClrTypeName = eventModel.EventType;
-            return JsonConvert.DeserializeObject(eventModel.EventData, Type.GetType(eventModel.EventType));
+            return new ParkingSlotEventModel(
+                Guid.NewGuid()
+                ,domainEvent.AggregateId
+                ,domainEvent.GetType().Name
+                ,JsonConvert.SerializeObject(domainEvent)
+                ,domainEvent.TimeCreated);
+        }
+
+        public static IDomainEvent DeserializeEvent(this DomainEventModel eventModel)
+        {
+            Type eventType;
+
+            try
+            {
+                eventType = Type.GetType($"FalconParking.Domain.Events.{eventModel.EventType}");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error al serializar evento: {ex}");
+            }
+
+            return (IDomainEvent) JsonConvert.DeserializeObject(eventModel.EventData, eventType);
         }
     }
 }

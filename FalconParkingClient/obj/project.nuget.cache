@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "mnVW8+PGPnUwGM1iyBsc8dph6hcUB5nCDoYoDgvxI0mq2bKxJWlVq2Xcp7OIDsrc8RQvKqz5d8iRoVK3NfYCfQ==",
+  "success": true,
+  "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingClient\\FalconParkingClient.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alekc\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

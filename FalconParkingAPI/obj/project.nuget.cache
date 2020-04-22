@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EIC3Wv5cshDDolQWF2U76Ua/V10HqnQgmfIRuO0eDDSs+HZr/NIrlYYItHJN4ew0Es8m1XvVz3ghVyMZT5qZfg==",
+  "dgSpecHash": "YnrUNEU56edweTBweYrhVRdZdIFzwCl9W6ujOAtyY8mZL4eL1fpP6BPJ08MNTG63LKjhgrS5asc1TYge37cFqA==",
   "success": true,
   "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,8 @@
     "C:\\Users\\alekc\\.nuget\\packages\\mediatr\\8.0.1\\mediatr.8.0.1.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\8.0.0\\mediatr.extensions.microsoft.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.3\\microsoft.aspnetcore.jsonpatch.3.1.3.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.3\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.3.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
@@ -51,6 +53,7 @@
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\npgsql\\4.1.3\\npgsql.4.1.3.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\3.1.3\\npgsql.entityframeworkcore.postgresql.3.1.3.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",

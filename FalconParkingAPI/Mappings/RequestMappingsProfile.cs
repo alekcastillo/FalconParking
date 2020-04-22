@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FalconParking.Infrastructure.Commands;
+using FalconParking.Application.Commands;
 using FalconParkingAPI.Models;
 
 namespace FalconParkingAPI.Mappings
@@ -8,7 +8,15 @@ namespace FalconParkingAPI.Mappings
     {
         public RequestMappingsProfile()
         {
+            //Lot Requests
+            CreateMap<AddParkingLotRequest, AddParkingLotCommand>();
+            CreateMap<OpenParkingLotRequest, OpenParkingLotCommand>();
+            CreateMap<CloseParkingLotRequest, CloseParkingLotCommand>();
+
+            //Slot Requests
             CreateMap<OccupyParkingSlotRequest, OccupyParkingSlotCommand>();
+            CreateMap<FreeParkingSlotRequest, FreeParkingSlotCommand>();
+            CreateMap<ReserveParkingSlotRequest, ReserveParkingSlotCommand>();
         }
     }
 }

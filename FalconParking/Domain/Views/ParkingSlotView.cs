@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System;
 
 namespace FalconParking.Domain.Views
 {
@@ -11,17 +6,39 @@ namespace FalconParking.Domain.Views
     {
         #region Atributos
 
-        public int AggregateId { get; private set; }
-
-        public int Id { get; private set; }
-        public int Status { get; private set; }
+        public Guid AggregateId { get; set; }
+        public Guid ParkingLotId { get; set; }
+        public ParkingLotView ParkingLot { get; set; }
+        public int SlotNumber { get; set;  }
+        public int Status { get; set; }
+        public bool IsReservable { get; set; }
+        public string CurrentOccupantLicensePlate { get; set; }
+        public DateTimeOffset UpdatedTime { get; set; }
+        public Guid UpdatedBy { get; set; }
 
         #endregion
+        public ParkingSlotView() { }
 
-        public ParkingSlotView(int id, int status)
+        public ParkingSlotView(
+            Guid aggregateId
+            ,Guid parkingLotId
+            ,ParkingLotView parkingLot
+            ,int slotNumber
+            ,int status
+            ,bool isReservable
+            ,string currentOccupantLicensePlate
+            ,DateTimeOffset updatedTime
+            ,Guid updatedBy)
         {
-            Id = id;
+            AggregateId = aggregateId;
+            ParkingLotId = parkingLotId;
+            ParkingLot = parkingLot;
+            SlotNumber = slotNumber;
             Status = status;
+            IsReservable = isReservable;
+            CurrentOccupantLicensePlate = currentOccupantLicensePlate;
+            UpdatedTime = updatedTime;
+            UpdatedBy = updatedBy;
         }
     }
 }

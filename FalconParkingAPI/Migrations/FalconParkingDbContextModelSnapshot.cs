@@ -21,10 +21,9 @@ namespace FalconParkingAPI.Migrations
 
             modelBuilder.Entity("FalconParking.Domain.Views.ParkingLotView", b =>
                 {
-                    b.Property<int>("AggregateId")
+                    b.Property<Guid>("AggregateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AvailableSlotsCount")
                         .HasColumnType("integer");
@@ -38,35 +37,62 @@ namespace FalconParkingAPI.Migrations
                     b.Property<int>("TotalSlotsCount")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("AggregateId");
 
-                    b.ToTable("ParkingLotViews");
+                    b.ToTable("lot_view","parking");
                 });
 
             modelBuilder.Entity("FalconParking.Domain.Views.ParkingSlotView", b =>
                 {
-                    b.Property<int>("AggregateId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("AggregateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("Id")
+                    b.Property<string>("CurrentOccupantLicensePlate")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsReservable")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ParkingLotId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SlotNumber")
                         .HasColumnType("integer");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.HasKey("AggregateId", "Id");
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uuid");
 
-                    b.ToTable("ParkingSlotViews");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("AggregateId");
+
+                    b.HasIndex("ParkingLotId");
+
+                    b.ToTable("slot_view","parking");
                 });
 
-            modelBuilder.Entity("FalconParking.Infrastructure.Models.ParkingLotEvent", b =>
+            modelBuilder.Entity("FalconParking.Infrastructure.Models.ParkingLotEventModel", b =>
                 {
                     b.Property<Guid>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("AggregateId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EventData")
                         .HasColumnType("jsonb");
@@ -76,14 +102,37 @@ namespace FalconParkingAPI.Migrations
 
                     b.HasKey("EventId");
 
-                    b.ToTable("ParkingLotEvents");
+                    b.ToTable("lot_eventlog","parking");
+                });
+
+            modelBuilder.Entity("FalconParking.Infrastructure.Models.ParkingSlotEventModel", b =>
+                {
+                    b.Property<Guid>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EventData")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("text");
+
+                    b.HasKey("EventId");
+
+                    b.ToTable("slot_eventlog","parking");
                 });
 
             modelBuilder.Entity("FalconParking.Domain.Views.ParkingSlotView", b =>
                 {
-                    b.HasOne("FalconParking.Domain.Views.ParkingLotView", null)
+                    b.HasOne("FalconParking.Domain.Views.ParkingLotView", "ParkingLot")
                         .WithMany("Slots")
-                        .HasForeignKey("AggregateId")
+                        .HasForeignKey("ParkingLotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

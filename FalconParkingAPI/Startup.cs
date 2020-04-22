@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FalconParking.Infrastructure.Commands;
-using FalconParking.Infrastructure.Commands.Handlers;
 using FalconParkingAPI.Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -20,11 +18,23 @@ using FalconParking.Domain;
 using FalconParking.Infrastructure.Repositories;
 using FalconParking.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using FalconParking.Application.Commands;
+using FalconParking.Application.Commands.Handlers;
+using FalconParking.Infrastructure.Abstractions;
+using FalconParking.Infrastructure.MessageBus;
+using FalconParking.Domain.Events;
+using FalconParking.Application.Events.Handlers;
+using FalconParking.Application.Queries;
+using FalconParking.Application.Queries.Handlers;
+using System.Threading;
+using FalconParking.Infrastructure.Tasks;
 
 namespace FalconParkingAPI
 {
     public class Startup
     {
+        private Thread loginSocket;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,13 +49,29 @@ namespace FalconParkingAPI
                 opt.UseNpgsql(Configuration.GetConnectionString("FalconParkingDbConnection"),
                 b => b.MigrationsAssembly("FalconParkingAPI")));
 
+            //Prevent the reference loop in parkinglots and slots
             services.AddControllers();
-            //Mediator handlers
-            services.AddMediatR(typeof(OccupyParkingSlotCommand).Assembly, typeof(OccupyParkingSlotCommandHandler).Assembly);
+
+            services.AddScoped<IMessageBus, MessageBus>();
+
+            //We use any class from the FalconParking project to add MediatR to its queries, commands, events, and handlers
+            services.AddMediatR(typeof(ParkingEvent).Assembly);
+
             //Mappers
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);
             //Repositories
-            services.AddTransient<IParkingLotRepository, ParkingLotRepository>();
+            services.AddScoped<IParkingLotRepository, ParkingLotRepository>();
+            services.AddTransient<IParkingLotViewRepository, ParkingLotViewRepository>();
+            services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
+            services.AddTransient<IParkingSlotViewRepository, ParkingSlotViewRepository>();
+
+            StartTasks();
+        }
+
+        private void StartTasks()
+        {
+            loginSocket = new Thread(new ThreadStart(LoginSocketThread.Start));
+            loginSocket.Start();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

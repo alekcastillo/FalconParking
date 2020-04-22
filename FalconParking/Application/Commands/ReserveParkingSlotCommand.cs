@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FalconParking.Infrastructure.Abstractions.Commands;
+using System;
 
-namespace FalconParking.Infrastructure.Commands
+namespace FalconParking.Application.Commands
 {
-    public class ReserveParkingSlotCommand : DomainCommand
+    public class ReserveParkingSlotCommand : ICommand<bool>
     {
-        public int ParkingSlotId { get; }
-        public string CarLicensePlate { get; }
-        public string UserIdentification { get; }
+        public Guid ParkingSlotId { get; set; }
+        public Guid CurrentUserId { get; set; }
+        public int ReservationTime { get; set; }
+
+        public ReserveParkingSlotCommand() { }
 
         public ReserveParkingSlotCommand(
-            int aggregateId,
-            int parkingSlotId,
-            string carLicensePlate,
-            string userIdentification) : base(aggregateId)
+            Guid parkingSlotId
+            ,Guid currentUserId
+            ,int reservationTime)
         {
             ParkingSlotId = parkingSlotId;
-            CarLicensePlate = carLicensePlate;
-            UserIdentification = userIdentification;
+            CurrentUserId = currentUserId;
+            ReservationTime = reservationTime;
         }
     }
 }

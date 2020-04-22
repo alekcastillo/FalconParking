@@ -1,30 +1,62 @@
-﻿using FalconParking.Domain;
+﻿using System.Linq;
+using FalconParking.Infrastructure.Events;
+using FalconParking.Domain;
+using FalconParking.Domain.Events;
 using FalconParking.Domain.Abstractions.Repositories;
-using FalconParking.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using FalconParking.Infrastructure.Models;
+using FalconParking.Infrastructure.Abstractions;
+using System.Threading;
+using FalconParking.Domain.Factories;
 
 namespace FalconParking.Infrastructure.Repositories
 {
     public class ParkingLotRepository : IParkingLotRepository
     {
-        private readonly ParkingLot[] _parkingLots;
+        private readonly FalconParkingDbContext _context;
+        private readonly IMessageBus _messageBus;
 
-        public ParkingLotRepository()
+        public ParkingLotRepository(
+            FalconParkingDbContext context
+            ,IMessageBus messageBus)
         {
-            _parkingLots = new ParkingLot[3];
-            _parkingLots[0] = ParkingLot.New(0, "A", 0.0f, 0.0f, 20);
-            _parkingLots[1] = ParkingLot.New(1, "B", 0.0f, 0.0f, 10);
-            _parkingLots[2] = ParkingLot.New(2, "C", 0.0f, 0.0f, 5);
+            _context = context;
+            _messageBus = messageBus;
         }
 
-        public ParkingLot Get(int id)
+        public async Task<ParkingLot> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken = default)
         {
-            return _parkingLots[id - 1];
+            var aggregate = AggregateFactory.CreateParkingLot(aggregateId);
+            var events = await _context.ParkingLotEvents.Where(
+                    e => e.AggregateId == aggregateId
+                ).OrderBy(
+                    e => e.CreatedTime
+                ).ToListAsync();
+            var eventsToApply = events.Select(e => e.DeserializeEvent());
+
+            aggregate.InitializeDomainEventHistory(eventsToApply);
+
+            return aggregate;
+        }
+
+        public async Task SaveAsync(ParkingLot aggregate, CancellationToken cancellationToken = default)
+        {
+            var events = aggregate.GetUncommittedDomainEvents();
+            if (events.Count < 1)
+                return;
+
+            await _messageBus.PublishRangeAsync(events);
+
+            var eventsToSave = events.Select(
+                    e => e.ToParkingLotEvent()
+                ).ToArray();
+
+            _context.ParkingLotEvents.AddRange(eventsToSave);
+            await _context.SaveChangesAsync();
+
+            aggregate.CommitDomainEvents();
         }
     }
 }

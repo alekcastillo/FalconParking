@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FalconParking.Infrastructure.Abstractions.Commands;
+using System;
 
-namespace FalconParking.Infrastructure.Commands
+namespace FalconParking.Application.Commands
 {
-    public class CloseParkingLot : DomainCommand
+    public class CloseParkingLotCommand : ICommand<bool>
     {
-        public int ParkingSlotId { get; }
-        public string UserIdentification { get; }
+        public Guid ParkingLotId { get; set; }
+        public Guid CurrentUserId { get; set; }
 
-        public CloseParkingLot(
-            int aggregateId,
-            int parkingSlotId,
-            string userIdentification) : base(aggregateId)
+        public CloseParkingLotCommand() { }
+
+        public CloseParkingLotCommand(
+            Guid parkingLotId
+            ,Guid currentUserId)
         {
-            ParkingSlotId = parkingSlotId;
-            UserIdentification = userIdentification;
+            ParkingLotId = parkingLotId;
+            CurrentUserId = currentUserId;
         }
     }
 }

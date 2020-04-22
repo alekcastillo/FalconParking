@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FalconParking.Infrastructure.Commands;
+using FalconParking.Application.Commands;
+using FalconParking.Application.Queries;
+using FalconParking.Domain.Views;
+using FalconParking.Infrastructure.Abstractions;
 using FalconParkingAPI.Models;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace FalconParkingAPI.Controllers
 {
@@ -16,53 +19,50 @@ namespace FalconParkingAPI.Controllers
     public class ParkingSlotController : Controller
     {
         private readonly ILogger<ParkingSlotController> _logger;
-        //private readonly IParkingEventRepository _eventsRepository;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        private readonly IMessageBus _messageBus;
 
         public ParkingSlotController(
-            ILogger<ParkingSlotController> logger,
-            //IParkingEventRepository eventsRepository,
-            IMapper mapper,
-            IMediator mediator)
+            ILogger<ParkingSlotController> logger
+            ,IMapper mapper
+            ,IMessageBus messageBus)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            //_eventsRepository = eventsRepository;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
         }
 
         [HttpPost("occupy")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<IActionResult> OccupyParkingSlot([FromBody] OccupyParkingSlotRequest request)
         {
             var command = _mapper.Map<OccupyParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
         }
 
-        [HttpPost("reserve")]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [HttpPost("free")]
+        [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<string> ReserveParkingSlot([FromBody] OccupyParkingSlotRequest request)
-        {
-            var command = _mapper.Map<ReserveParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
-        }
-
-        [HttpPost("reserve")]
-        [ProducesResponseType(typeof(Guid), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public async Task<string> FreeParkingSlot([FromBody] OccupyParkingSlotRequest request)
+        public async Task<IActionResult> FreeParkingSlot([FromBody] FreeParkingSlotRequest request)
         {
             var command = _mapper.Map<FreeParkingSlotCommand>(request);
-            var response = await _mediator.Send(command);
-            return response.ToString();
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
+        }
+
+        [HttpPost("reserve")]
+        [Produces("application/json")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> ReserveParkingSlot([FromBody] ReserveParkingSlotRequest request)
+        {
+            var command = _mapper.Map<ReserveParkingSlotCommand>(request);
+            var result = await _messageBus.SendAsync(command);
+            return Ok(result);
         }
     }
 }
