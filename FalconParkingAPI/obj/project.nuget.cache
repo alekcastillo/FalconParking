@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YnrUNEU56edweTBweYrhVRdZdIFzwCl9W6ujOAtyY8mZL4eL1fpP6BPJ08MNTG63LKjhgrS5asc1TYge37cFqA==",
+  "dgSpecHash": "scnEg1h24gTQ6oaUUdmqPnqZaMTN9K7vIVbWYz76mAkebgf8zs4RnaWZ5FOmy1foOsKnvNnM1bArhY9CRkuIJg==",
   "success": true,
-  "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj",
+  "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alekc\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",

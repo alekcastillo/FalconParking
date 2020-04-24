@@ -1882,11 +1882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj",
+      "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj",
       "projectName": "FalconParking",
-      "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj",
+      "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj",
       "packagesPath": "C:\\Users\\alekc\\.nuget\\packages\\",
-      "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\obj\\",
+      "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

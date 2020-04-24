@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj": {}
+    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj": {}
   },
   "projects": {
-    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj": {
+    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj",
+        "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj",
         "projectName": "FalconParkingAPI",
-        "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI.csproj",
+        "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj",
         "packagesPath": "C:\\Users\\alekc\\.nuget\\packages\\",
-        "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParkingAPI\\obj\\",
+        "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -31,8 +31,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj": {
-                "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj"
+              "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj": {
+                "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj"
               }
             }
           }
@@ -121,14 +121,14 @@
         }
       }
     },
-    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj": {
+    "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj",
+        "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj",
         "projectName": "FalconParking",
-        "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\FalconParking.csproj",
+        "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj",
         "packagesPath": "C:\\Users\\alekc\\.nuget\\packages\\",
-        "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParkingAPI\\FalconParking\\obj\\",
+        "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
