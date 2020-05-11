@@ -1,0 +1,14 @@
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Infrastructure.deps.json
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Infrastructure.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.csprojAssemblyReference.cache
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.AssemblyInfoInputs.cache
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.AssemblyInfo.cs
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.csproj.CoreCompileInputs.cache
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Domain.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Domain.pdb
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.csproj.CopyComplete
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Application.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Application.pdb
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\bin\Debug\netstandard2.0\Infrastructure.pdb
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Infrastructure\obj\Debug\netstandard2.0\Infrastructure.pdb

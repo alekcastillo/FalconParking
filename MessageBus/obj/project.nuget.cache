@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "tBTZoNEwDj7S+gjC2RibjAJ0//vANg8ZWRYn02zNbfHGAY+7Kh+I4pG7FUztvNXIPops7S2URPX70T9UZ3Ey9g==",
+  "success": true,
+  "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\MessageBus\\MessageBus.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

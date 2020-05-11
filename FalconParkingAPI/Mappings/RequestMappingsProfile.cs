@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FalconParking.Application.Commands;
+using Application.Commands;
 using FalconParkingAPI.Models;
 
 namespace FalconParkingAPI.Mappings

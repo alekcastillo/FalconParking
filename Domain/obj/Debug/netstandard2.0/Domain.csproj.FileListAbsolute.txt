@@ -1,0 +1,9 @@
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.csprojAssemblyReference.cache
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfoInputs.cache
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfo.cs
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\bin\Debug\netstandard2.0\Domain.deps.json
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\bin\Debug\netstandard2.0\Domain.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\bin\Debug\netstandard2.0\Domain.pdb
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.dll
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.pdb
+E:\Libraries\Documents\ULACIT\Cuatri 6\Concurrente\FalconParkingAPI\FalconParking\Domain\obj\Debug\netstandard2.0\Domain.csproj.CoreCompileInputs.cache

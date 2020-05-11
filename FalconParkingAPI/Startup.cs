@@ -1,33 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FalconParkingAPI.Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using FalconParking.Domain.Abstractions.Repositories;
-using FalconParking.Domain;
-using FalconParking.Infrastructure.Repositories;
-using FalconParking.Infrastructure;
+using Domain.Abstractions.Repositories;
+using Domain;
+using Infrastructure.Repositories;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using FalconParking.Application.Commands;
-using FalconParking.Application.Commands.Handlers;
-using FalconParking.Infrastructure.Abstractions;
-using FalconParking.Infrastructure.MessageBus;
-using FalconParking.Domain.Events;
-using FalconParking.Application.Events.Handlers;
-using FalconParking.Application.Queries;
-using FalconParking.Application.Queries.Handlers;
+using Domain.Events;
 using System.Threading;
-using FalconParking.Infrastructure.Tasks;
+using Application.Abstractions;
+using Application.MessageBus;
+using Application.Events;
+using System.Reflection;
+using System;
+using Application.Events.Handlers;
 
 namespace FalconParkingAPI
 {
@@ -53,7 +45,8 @@ namespace FalconParkingAPI
             services.AddScoped<IMessageBus, MessageBus>();
 
             //We use any class from the FalconParking project to add MediatR to its queries, commands, events, and handlers
-            services.AddMediatR(typeof(ParkingEvent).Assembly);
+            services.AddMediatR(typeof(DomainEvent).Assembly);
+            services.AddMediatR(typeof(ParkingLotEventHandlers).Assembly);
 
             //Mappers
             services.AddAutoMapper(typeof(RequestMappingsProfile).Assembly);
@@ -62,6 +55,8 @@ namespace FalconParkingAPI
             services.AddTransient<IParkingLotViewRepository, ParkingLotViewRepository>();
             services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
             services.AddTransient<IParkingSlotViewRepository, ParkingSlotViewRepository>();
+
+            //services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +72,8 @@ namespace FalconParkingAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

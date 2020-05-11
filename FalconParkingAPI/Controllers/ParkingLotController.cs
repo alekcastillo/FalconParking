@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Abstractions;
+using Application.Commands;
+using Application.Queries;
 using AutoMapper;
-using FalconParking.Application.Commands;
-using FalconParking.Application.Queries;
-using FalconParking.Domain.Views;
-using FalconParking.Infrastructure.Abstractions;
+using Domain.Views;
 using FalconParkingAPI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

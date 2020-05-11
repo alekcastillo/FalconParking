@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "ffp/YGbtvnRWe5pW1ne3fL0bBAUD4+gBufwPXbu297QEowTHu9vWmSCZXYMx01tgDFFM6XofEa6g8Pzaal2JNQ==",
+  "success": true,
+  "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alekc\\.nuget\\packages\\mediatr\\8.0.1\\mediatr.8.0.1.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

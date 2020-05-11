@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FalconParking.Application.Commands;
-using FalconParking.Application.Queries;
-using FalconParking.Domain.Views;
-using FalconParking.Infrastructure.Abstractions;
+using Application.Commands;
 using FalconParkingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Application.Abstractions;
 
 namespace FalconParkingAPI.Controllers
 {

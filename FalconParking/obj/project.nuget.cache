@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "E2uEc0WWICDh4TW+jNqRO0RLQne9ntT6dC2UD7fH/wMdq3uiffD7TF2bB78WYjpbXYYuGpyGmcA0hgFnw2LcRQ==",
+  "dgSpecHash": "sG/ploceXaSOR0+/571FbBczVrWWJAaIknasK04gz5SO4eTSZDkhDQQ8rlQHpPTCB4z+i9twNovZTx9+Sa2pFw==",
   "success": true,
   "projectFilePath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParking\\FalconParking.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alekc\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\mediatr\\8.0.1\\mediatr.8.0.1.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.3\\microsoft.aspnetcore.cryptography.internal.3.1.3.nupkg.sha512",
+    "C:\\Users\\alekc\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.3\\microsoft.aspnetcore.cryptography.keyderivation.3.1.3.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\alekc\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
