@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FalconParkingAPI": {
+    "API": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

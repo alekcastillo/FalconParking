@@ -7138,9 +7138,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj",
-      "projectName": "FalconParkingAPI",
-      "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\FalconParkingAPI.csproj",
+      "projectUniqueName": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\API.csproj",
+      "projectName": "API",
+      "projectPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\API.csproj",
       "packagesPath": "C:\\Users\\alekc\\.nuget\\packages\\",
       "outputPath": "E:\\Libraries\\Documents\\ULACIT\\Cuatri 6\\Concurrente\\FalconParkingAPI\\FalconParking\\FalconParkingAPI\\obj\\",
       "projectStyle": "PackageReference",
